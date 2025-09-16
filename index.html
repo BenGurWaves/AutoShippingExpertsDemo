@@ -2,38 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Shipping Experts — Auto Shipping Experts</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Shipping Experts — Nationwide auto transport. Get a free quote for vehicle shipping: open, enclosed, exotic, dealer & more." />
 
-  <!-- Google font (DM Sans) -->
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-
+  <!-- NOTE: All CSS/JS inline per request. -->
   <style>
     :root{
-      --orange: #FF6700;
-      --orange-dark: #e55600;
-      --muted: #6b7280;
-      --bg: #f7f7f8;
-      --card: #ffffff;
-      --max-width: 1200px;
-      --radius: 12px;
+      --orange:#FF6700;
+      --orange-dark:#e55600;
+      --bg:#f6f6f7;
+      --muted:#687187;
+      --card:#ffffff;
+      --maxw:1200px;
+      --radius:12px;
+      --glass: rgba(255,255,255,0.5);
+      --accent-grad: linear-gradient(90deg,var(--orange) 0%, #ffffff 60%);
     }
 
+    /* Reset / base */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family:"DM Sans",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      color:#0f172a;
+      font-family: "Classico", "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background:var(--bg);
+      color:#071027;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       line-height:1.45;
-      -webkit-tap-highlight-color: transparent;
+    }
+    a{color:inherit}
+
+    /* Skip link for accessibility */
+    .skip-link{
+      position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
+    }
+    .skip-link:focus{
+      left:12px;top:12px;width:auto;height:auto;padding:10px 12px;background:#000;color:#fff;border-radius:8px;z-index:9999;
     }
 
-    /* Container */
-    .wrap{max-width:var(--max-width);margin:0 auto;padding:28px 20px;}
+    /* Loader overlay */
+    #loader{
+      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fff;z-index:99999;
+      transition:opacity .6s ease, visibility .6s ease;opacity:1;visibility:visible;
+    }
+    #loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    #loader video{
+      width:min(860px,90vw);
+      height:auto;
+      border-radius:10px;
+      box-shadow:0 20px 60px rgba(10,15,30,0.08);
+      display:block;
+    }
+    #loader .skip{
+      position:absolute;bottom:40px;background:transparent;border:1px solid rgba(0,0,0,0.08);padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;
+    }
+
+    /* Page container */
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:28px 20px}
 
     /* Header */
     header.site-header{
@@ -41,166 +68,195 @@
       position:sticky;
       top:0;
       z-index:60;
-      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
-      border-bottom-left-radius:10px;
-      border-bottom-right-radius:10px;
+      box-shadow: 0 8px 24px rgba(8,17,38,0.06);
+      backdrop-filter: blur(6px);
+      border-bottom-left-radius:12px;border-bottom-right-radius:12px;
     }
-    .header-inner{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;gap:20px;padding:14px 20px;}
+    .header-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:18px;padding:12px 20px}
     .brand{display:flex;align-items:center;gap:12px}
-    .brand img{height:48px;width:auto;display:block}
-    .brand h1{font-size:18px;margin:0;font-weight:700;color:#081126;letter-spacing:0.2px}
-    nav.main-nav{margin-left:20px;flex:1}
+    .brand img{height:52px;width:auto;display:block}
+    .brand h1{font-size:18px;margin:0;font-weight:800;color:#081126;letter-spacing:0.3px}
+    .subdomain{font-size:12px;color:rgba(8,17,38,0.6)}
+
+    /* Navigation */
+    nav.main-nav{margin-left:18px;flex:1}
     nav ul{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
-    nav a{color:#081126;text-decoration:none;font-weight:500;padding:8px 10px;border-radius:8px}
+    nav a{color:#081126;text-decoration:none;font-weight:600;padding:8px 10px;border-radius:8px}
     nav a:hover{background:rgba(0,0,0,0.04)}
-    .cta{
-      margin-left:auto;
-      display:flex;
-      gap:12px;
-      align-items:center;
-    }
+    .cta{display:flex;gap:12px;align-items:center}
     .btn{
-      border:0;
-      padding:10px 16px;
-      border-radius:10px;
-      font-weight:700;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      text-decoration:none;
+      border:0;padding:10px 16px;border-radius:10px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:transform .12s ease, box-shadow .18s ease;
     }
+    .btn:focus{outline:3px solid rgba(255,103,0,0.16);outline-offset:3px}
     .btn-quote{
       background: linear-gradient(180deg,var(--orange) 0%, var(--orange-dark) 100%);
-      color:#fff;
-      box-shadow: 0 8px 24px rgba(255,103,0,0.18);
+      color:#fff;box-shadow:0 12px 36px rgba(255,103,0,0.18);
+      position:relative;overflow:hidden;
+      --pulse: none;
+      animation: pulse 3s infinite;
     }
-    .btn-secondary{
-      background:transparent;
-      color:#081126;
-      padding:8px 12px;
-      border-radius:8px;
-      border:1px solid rgba(0,0,0,0.06);
+    @keyframes pulse{
+      0%{box-shadow:0 10px 22px rgba(255,103,0,0.16)}
+      50%{box-shadow:0 18px 38px rgba(255,103,0,0.22)}
+      100%{box-shadow:0 10px 22px rgba(255,103,0,0.16)}
+    }
+    .btn-call{
+      background:#fff;padding:10px 14px;border-radius:10px;border:1px solid rgba(8,17,38,0.06);font-weight:700;color:#081126;
+      box-shadow: 0 6px 18px rgba(8,17,38,0.04);
     }
 
-    /* Hero slideshow */
-    .hero{
-      margin-top:26px;
-    }
+    /* small nav on mobile */
+    .menu-toggle{display:none}
+
+    /* Hero / Slideshow */
+    .hero{margin-top:18px;display:grid;grid-template-columns:1fr;gap:18px}
     .slideshow{
-      position:relative;
-      border-radius:12px;
-      overflow:hidden;
-      background:#111;
-      height:420px;
-      box-shadow:0 12px 30px rgba(8,17,38,0.06);
+      position:relative;border-radius:14px;overflow:hidden;background:#09121b;height:460px;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 16px 40px rgba(8,17,38,0.06);
     }
-    .slides{display:flex;height:100%;width:100%}
-    .slide{
-      min-width:100%;
-      transition:opacity .8s ease;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position:absolute;
-      inset:0;
-      opacity:0;
-      object-fit:cover;
-    }
-    .slide img{width:100%;height:100%;object-fit:cover;display:block}
+    .slides{width:100%;height:100%;position:relative}
+    .slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease;display:flex;align-items:center;justify-content:center}
     .slide.active{opacity:1;position:relative}
-
-    .slideshow-controls{
-      position:absolute;left:12px;right:12px;bottom:18px;display:flex;justify-content:space-between;gap:12px;
-      pointer-events:none;
+    .slide img{width:100%;height:100%;object-fit:cover;display:block}
+    .slideshow-overlay{
+      position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.04) 40%, rgba(0,0,0,0));
     }
-    .slideshow-controls .left,
-    .slideshow-controls .right{pointer-events:auto;background:rgba(255,255,255,0.9);border-radius:8px;padding:8px;backdrop-filter:blur(4px)}
-    .slideshow-pagination{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;display:flex;gap:8px}
-    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.6);cursor:pointer}
-    .dot.active{background:var(--orange)}
+    .hero-copy{
+      position:absolute;right:40px;top:50%;transform:translateY(-50%);color:#fff;max-width:480px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));border-radius:12px;
+      backdrop-filter: blur(4px);
+    }
+    .hero-copy h2{margin:0 0 6px;font-size:34px;line-height:1.05}
+    .hero-copy p{margin:0 0 12px;color:rgba(255,255,255,0.9)}
+    .hero-cta{display:flex;gap:10px;align-items:center}
+
+    /* metallic/chrome headings */
+    .metal{
+      background-image: linear-gradient(90deg,#fff 0%, #f2f2f2 15%, #d1d1d1 45%, #b5b5b5 60%, #eee 100%);
+      -webkit-background-clip: text; background-clip:text;color:transparent;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.12);
+    }
 
     /* thin CTA band */
-    .thin-cta{margin:18px 0;padding:14px;border-radius:10px;background:linear-gradient(90deg,#fff 0%, rgba(255,255,255,0.85) 40%);display:flex;align-items:center;justify-content:center;gap:12px}
-    .thin-cta .btn-quote{padding:10px 18px}
+    .thin-cta{margin:18px 0;padding:14px;border-radius:10px;background:linear-gradient(90deg,#fff 0%, rgba(255,255,255,0.9) 40%);display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 10px 30px rgba(10,15,30,0.04)}
+    .thin-cta .btn-quote{padding:12px 20px}
 
-    /* Stats / trust */
-    .trust{
-      background:linear-gradient(180deg,#fff 0%, #fbfbfb 100%);
-      border-radius:12px;padding:28px;margin-top:18px;text-align:center;box-shadow:0 8px 20px rgba(15,23,42,.04)
-    }
-    .trust h2{margin:0 0 18px;font-size:22px}
-    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:10px 0 18px}
-    .stat{
-      background:linear-gradient(180deg,#fff,#fff);
-      padding:18px;border-radius:10px;border:1px solid rgba(10,10,10,0.03)
-    }
-    .stat .num{font-weight:700;font-size:20px;color:var(--orange)}
+    /* Trust / Stats */
+    .trust{background:linear-gradient(180deg,#fff,#fbfbfb);border-radius:12px;padding:26px;margin-top:18px;text-align:center;box-shadow:0 10px 30px rgba(8,17,38,.04)}
+    .trust h2{margin:0 0 14px;font-size:22px}
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:6px 0 18px}
+    .stat{background:var(--card);padding:18px;border-radius:10px;border:1px solid rgba(10,10,10,0.03)}
+    .stat .num{font-weight:900;font-size:20px;color:var(--orange)}
     .stat .label{color:var(--muted);font-size:13px;margin-top:6px}
     .trust .cta-row{margin-top:12px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-    .phone-btn{background:#081126;color:#fff;padding:12px 18px;border-radius:10px;text-decoration:none;font-weight:700}
-    .email-btn{background:transparent;border:2px solid var(--orange);color:var(--orange);padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none}
 
-    /* Explaining / How it works */
-    .how{
-      margin-top:26px;padding:26px;background:transparent;border-radius:12px;
-    }
+    /* Steps (How it works) */
+    .how{margin-top:26px;padding:22px;border-radius:12px}
     .how h2{font-size:20px;text-align:center;margin-bottom:12px}
     .steps{display:flex;flex-direction:column;gap:12px;max-width:900px;margin:0 auto}
     .step{background:var(--card);padding:16px;border-radius:10px;border:1px solid rgba(10,10,10,0.04)}
     .step h3{margin:0 0 6px}
     .step p{margin:0;color:var(--muted);font-size:14px}
 
-    /* Services */
+    /* Services alternating layout with diagonal feel */
     .services{margin-top:26px;padding:10px 0}
     .services h2{text-align:center;margin-bottom:18px}
-    .service-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center;margin:20px 0;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff);box-shadow:0 8px 20px rgba(8,17,38,0.04)}
+    .service-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:center;margin:20px 0;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff);box-shadow:0 8px 20px rgba(8,17,38,0.04);overflow:hidden;position:relative}
+    .service-row::after{content:"";position:absolute;right:-40px;top:-30px;width:200px;height:200px;background:radial-gradient(circle at 30% 30%, rgba(255,103,0,0.06), transparent 40%);transform:rotate(18deg)}
     .service-row.reverse{direction:ltr}
-    .service-image img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+    .service-image img{width:100%;height:100%;object-fit:cover;border-radius:10px;transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease}
+    .service-image img:hover{transform:scale(1.035);box-shadow:0 26px 48px rgba(6,12,24,0.14)}
     .service-content h3{margin:0 0 8px}
     .service-content p{color:var(--muted);margin:0;line-height:1.5}
 
-    /* make alternating layout easier on small screens */
-    @media (max-width:880px){
-      nav ul{display:none}
-      .header-inner{padding:12px}
-      .slideshow{height:260px}
-      .service-row{grid-template-columns:1fr; text-align:left}
-      .service-row .service-image{order:0}
-      .service-row.reverse .service-image{order:0}
-      .wrap{padding:16px}
-    }
-
-    /* About, Contact, FAQ, Footer */
+    /* About / Contact / FAQ / Footer */
     .about, .contact, .faq{margin-top:26px;padding:22px;background:linear-gradient(180deg,#fff,#fcfcfc);border-radius:12px}
     .about h2,.contact h2,.faq h2{margin-top:0}
     .contact .contact-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
     .faq .q{padding:12px;border-radius:8px;background:#fff;margin-bottom:8px}
 
-    footer.site-footer{
-      margin-top:28px;background:#060606;color:#efefef;padding:28px 20px;border-radius:10px;
-    }
-    footer .footer-inner{max-width:var(--max-width);margin:0 auto;display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:flex-start}
+    footer.site-footer{margin-top:28px;background:#060606;color:#efefef;padding:28px 20px;border-radius:10px}
+    footer .footer-inner{max-width:var(--maxw);margin:0 auto;display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:flex-start}
     footer .links{display:flex;gap:18px;flex-direction:column}
     footer a{color:#efefef;text-decoration:none}
     footer .address{max-width:360px;font-size:14px;color:#d6d6d6}
 
-    /* small helpers */
-    .muted{color:var(--muted)}
-    .center{text-align:center}
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(3,6,11,0.88);display:none;align-items:center;justify-content:center;padding:20px;z-index:99998}
+    .lightbox.visible{display:flex}
+    .lightbox img{max-width:96vw;max-height:86vh;border-radius:8px;box-shadow:0 26px 60px rgba(0,0,0,0.6)}
+    .lb-close{position:absolute;top:20px;right:24px;color:#fff;font-weight:800;background:transparent;border:0;font-size:20px;cursor:pointer}
+    .lb-arrow{position:absolute;top:50%;transform:translateY(-50%);color:#fff;background:transparent;border:0;font-size:30px;cursor:pointer}
+    .lb-arrow.left{left:18px} .lb-arrow.right{right:18px}
+
+    /* reveal animations */
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s cubic-bezier(.2,.9,.3,1)}
+    .reveal.in-view{opacity:1;transform:translateY(0)}
+
+    /* small screens */
+    @media (max-width:900px){
+      nav ul{display:none}
+      .hero-copy{position:static;transform:none;max-width:100%;padding:14px}
+      .slides {height:320px}
+      .slideshow{height:320px}
+      .service-row{grid-template-columns:1fr}
+      .brand h1{font-size:16px}
+      .brand img{height:44px}
+    }
+
+    /* focus styles for accessibility */
+    button:focus, a:focus{outline:3px solid rgba(255,103,0,0.14);outline-offset:3px}
 
   </style>
+
+  <!-- JSON-LD LocalBusiness (structured data) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"Shipping Experts INC.",
+    "url":"https://autoshippingexperts.com",
+    "logo":"https://autoshippingexperts.com/Logo.png",
+    "telephone":"+1-916-760-7202",
+    "email":"dispatch@autoshippingexperts.com",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"7551 14th Ave Suite A",
+      "addressLocality":"Sacramento",
+      "addressRegion":"CA",
+      "postalCode":"95820",
+      "addressCountry":"US"
+    },
+    "description":"Shipping Experts — Nationwide auto transport. Open & enclosed carriers, exotic shipping, dealers, motorcycles, boats and inoperable vehicles."
+  }
+  </script>
+
 </head>
 <body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Loader (centered video on white background) -->
+  <div id="loader" role="dialog" aria-label="Loading animation - Shipping Experts">
+    <video id="introVideo" src="ShippingExpertsLoad.mp4" autoplay muted playsinline preload="auto"></video>
+    <button class="skip" aria-label="Skip intro (show site now)" id="skipIntro">Skip Intro</button>
+  </div>
+
+  <!-- Lightbox for fleet images -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <button class="lb-close" id="lbClose" aria-label="Close viewer">✕</button>
+    <button class="lb-arrow left" id="lbPrev" aria-label="Previous image">◀</button>
+    <img id="lbImage" src="" alt="Fleet image">
+    <button class="lb-arrow right" id="lbNext" aria-label="Next image">▶</button>
+  </div>
 
   <!-- Header -->
   <header class="site-header" role="banner">
     <div class="header-inner">
       <div class="brand" aria-label="Shipping Experts brand">
         <img src="Logo.png" alt="Shipping Experts logo" />
-        <div>
+        <div style="line-height:1;">
           <h1>Shipping Experts</h1>
-          <div class="muted" style="font-size:12px">autoshippingexperts</div>
+          <div class="subdomain">autoshippingexperts</div>
         </div>
       </div>
 
@@ -213,117 +269,117 @@
         </ul>
       </nav>
 
-      <div class="cta">
-        <a class="btn btn-secondary" href="#contact">Get Quote</a>
-        <a class="btn btn-quote" href="#contact">Get Quote</a>
+      <div class="cta" role="group" aria-label="Quick actions">
+        <!-- White call button (calls phone app) -->
+        <a class="btn btn-call" href="tel:+19167607202" id="callNow">Call Now</a>
+        <!-- Orange Get Quote (anchors to contact) -->
+        <a class="btn btn-quote" href="#contact" id="getQuoteMain">Get Quote</a>
       </div>
     </div>
   </header>
 
-  <main class="wrap" id="home" role="main">
+  <!-- Main content -->
+  <main id="main" class="wrap" role="main" aria-label="Main content">
 
-    <!-- Hero slideshow -->
-    <section class="hero" aria-label="Hero slideshow">
-      <div class="slideshow" id="slideshow">
-        <!-- Slides: Truck1.png -> Truck8.png -->
+    <!-- Hero / slideshow -->
+    <section id="home" class="hero" aria-label="Hero section">
+      <div class="slideshow" id="slideshow" aria-live="polite">
         <div class="slides">
-          <div class="slide active"><img src="Truck1.png" alt="Truck 1"></div>
-          <div class="slide"><img src="Truck2.png" alt="Truck 2"></div>
-          <div class="slide"><img src="Truck3.png" alt="Truck 3"></div>
-          <div class="slide"><img src="Truck4.png" alt="Truck 4"></div>
-          <div class="slide"><img src="Truck5.png" alt="Truck 5"></div>
-          <div class="slide"><img src="Truck6.png" alt="Truck 6"></div>
-          <div class="slide"><img src="Truck7.png" alt="Truck 7"></div>
-          <div class="slide"><img src="Truck8.png" alt="Truck 8"></div>
+          <div class="slide active"><img src="Truck1.png" alt="Truck 1" loading="lazy"></div>
+          <div class="slide"><img src="Truck2.png" alt="Truck 2" loading="lazy"></div>
+          <div class="slide"><img src="Truck3.png" alt="Truck 3" loading="lazy"></div>
+          <div class="slide"><img src="Truck4.png" alt="Truck 4" loading="lazy"></div>
+          <div class="slide"><img src="Truck5.png" alt="Truck 5" loading="lazy"></div>
+          <div class="slide"><img src="Truck6.png" alt="Truck 6" loading="lazy"></div>
+          <div class="slide"><img src="Truck7.png" alt="Truck 7" loading="lazy"></div>
+          <div class="slide"><img src="Truck8.png" alt="Truck 8" loading="lazy"></div>
         </div>
 
-        <div class="slideshow-controls" aria-hidden="false">
-          <div class="left">
-            <button id="prev" aria-label="Previous slide" style="background:none;border:none;cursor:pointer;font-weight:700;">◀</button>
-          </div>
+        <div class="slideshow-overlay"></div>
 
-          <div class="right" style="display:flex;gap:8px;align-items:center;">
-            <button id="next" aria-label="Next slide" style="background:none;border:none;cursor:pointer;font-weight:700;">▶</button>
+        <div class="hero-copy reveal" data-delay="120">
+          <h2 class="metal" id="heroHeadline">
+            <!-- Hero headline variant hook (querystring) -->
+            Your vehicle. Delivered with precision.
+          </h2>
+          <p>Nationwide auto transport — open, enclosed, and specialty carriers with trusted drivers and on-time delivery.</p>
+          <div class="hero-cta">
+            <a class="btn btn-quote" href="#contact">Get Quote</a>
+            <a class="btn btn-call" href="tel:+19167607202">Call (916) 760-7202</a>
           </div>
         </div>
-
-        <div class="slideshow-pagination" id="pagination" aria-hidden="false"></div>
       </div>
     </section>
 
     <!-- thin CTA band -->
-    <section class="thin-cta" role="region" aria-label="Quick Quote CTA">
-      <div style="max-width:var(--max-width);width:100%;display:flex;align-items:center;justify-content:center;gap:12px;">
-        <strong style="font-size:16px">Ready to ship your vehicle?</strong>
-        <a class="btn btn-quote" href="#contact">Get Quote</a>
-      </div>
+    <section class="thin-cta reveal" data-delay="80" aria-label="Quick quote CTA">
+      <strong style="font-size:16px">Ready to ship your vehicle? Fast quotes. Trusted carriers.</strong>
+      <a class="btn btn-quote" href="#contact">Get Quote</a>
     </section>
 
     <!-- Trust / Stats -->
-    <section class="trust" aria-label="Trust and statistics">
-      <h2>Trust In The Experts</h2>
+    <section class="trust reveal" aria-label="Trust and statistics" data-delay="60">
+      <h2 class="metal">Trust In The Experts</h2>
 
-      <div class="stat-grid" role="list">
-        <div class="stat" role="listitem">
-          <div class="num">1,250</div>
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="num" data-count="1250">0</div>
           <div class="label">Vehicles Shipped Monthly</div>
         </div>
-        <div class="stat" role="listitem">
-          <div class="num">982,370</div>
+        <div class="stat">
+          <div class="num" data-count="982370">0</div>
           <div class="label">Customers Helped</div>
         </div>
-        <div class="stat" role="listitem">
-          <div class="num">4.7</div>
+        <div class="stat">
+          <div class="num" data-count="4.7" data-decimals="1">0</div>
           <div class="label">Company Rating</div>
         </div>
-        <div class="stat" role="listitem">
-          <div class="num">20+</div>
+        <div class="stat">
+          <div class="num" data-count="20">0</div>
           <div class="label">Years in Service</div>
         </div>
       </div>
 
-      <div class="center" style="margin-top:6px">
-        <div style="font-weight:700;margin-bottom:8px">Get Your Free Quote Now</div>
-        <div class="cta-row">
-          <a class="phone-btn" href="tel:+19167607202">Call (916) 760-7202</a>
-          <a class="email-btn" href="mailto:dispatch@autoshippingexperts.com">Email dispatch@autoshippingexperts.com</a>
-        </div>
+      <div style="font-weight:700;margin-bottom:8px">Get Your Free Quote Now</div>
+      <div class="cta-row">
+        <a class="phone-btn" href="tel:+19167607202">Call (916) 760-7202</a>
+        <a class="email-btn" href="mailto:dispatch@autoshippingexperts.com?subject=Request%20for%20a%20Quote">Email dispatch@autoshippingexperts.com</a>
       </div>
     </section>
 
     <!-- How Car Shipping Works (explaining) -->
-    <section class="how" aria-label="How Car Shipping Works">
+    <section class="how reveal" aria-label="How Car Shipping Works" data-delay="40">
       <h2>How Car Shipping Works</h2>
-      <div class="steps" role="list">
-        <div class="step" role="listitem">
+      <div class="steps">
+        <div class="step">
           <h3>Booking</h3>
-          <p>Choose a pickup and delivery window, provide vehicle information, and select the shipping option (open or enclosed). We'll confirm availability and send a transparent quote.</p>
+          <p>Choose pickup and delivery windows, provide vehicle details, and pick open or enclosed transport. We confirm availability and send a clear quote.</p>
         </div>
 
-        <div class="step" role="listitem">
+        <div class="step">
           <h3>Pickup</h3>
-          <p>Carrier dispatch coordinates a pickup. Driver inspects your vehicle and records condition before loading. We confirm pickup time and driver details before arrival.</p>
+          <p>Driver inspects and documents vehicle condition, coordinates pickup, and loads the vehicle securely for transit.</p>
         </div>
 
-        <div class="step" role="listitem">
+        <div class="step">
           <h3>Shipping</h3>
-          <p>Your vehicle is transported across state lines on scheduled routes. Our carriers communicate regularly and provide updates during transit, ensuring safe handling.</p>
+          <p>Your vehicle travels along scheduled routes with regular updates from the carrier so you always know where it is.</p>
         </div>
 
-        <div class="step" role="listitem">
+        <div class="step">
           <h3>Delivery</h3>
-          <p>Carrier notifies the recipient ahead of arrival. A final inspection is performed at delivery and proof of delivery is provided. Any questions? We stay available until you're satisfied.</p>
+          <p>Driver notifies recipient, completes delivery inspection, and provides proof of delivery. We remain available for follow-up questions.</p>
         </div>
       </div>
     </section>
 
     <!-- Services -->
-    <section id="services" class="services" aria-label="Services">
-      <h2>Services</h2>
+    <section id="services" class="services" aria-label="Services" >
+      <h2 class="reveal" data-delay="20">Services</h2>
 
-      <!-- Open Auto Shipping (image left) -->
-      <div class="service-row" id="open-auto">
-        <div class="service-image"><img src="Truck1.png" alt="Open Auto Shipping image"></div>
+      <!-- Open Auto Shipping -->
+      <div class="service-row reveal" data-delay="30">
+        <div class="service-image"><img src="Truck1.png" alt="Open Auto Shipping" loading="lazy"></div>
         <div class="service-content">
           <h3>Open Auto Shipping</h3>
           <p>
@@ -332,20 +388,20 @@
         </div>
       </div>
 
-      <!-- Enclosed Auto Shipping (image right) -->
-      <div class="service-row reverse">
+      <!-- Enclosed Auto Shipping -->
+      <div class="service-row reverse reveal" data-delay="32">
         <div class="service-content">
           <h3>Enclosed Auto Shipping</h3>
           <p>
-            An enclosed auto carrier provides maximum security for your vehicle during transportation. If you're shipping exotic, luxury, classic or custom vehicles our enclosed transport service would be your preferred option. Enclosed auto transport will protect your car and insure complete safety from any type of weather or road conditions that may occur during shipping. Our enclosed carriers range in size so no matter what type of car you own we can ship it. Whenever shipping with Auto Shipping Experts you will have the security of knowing your precious cargo is in the right hands.
+            An enclosed auto carrier provides maximum security for your vehicle during transportation. If your shipping exotic, luxury, classic or custom vehicles our enclosed transport service would be your preferred option. Enclosed auto transport will protect your car and insure complete safety from any type of weather or road conditions that may occur during shipping. Our enclosed carriers range in size so no matter what type of car you own we can ship it. Whenever shipping with Auto Shipping Experts you will have the security of knowing your precious cargo is in the right hands.
           </p>
         </div>
-        <div class="service-image"><img src="Truck2.png" alt="Enclosed Auto Shipping image"></div>
+        <div class="service-image"><img src="Truck2.png" alt="Enclosed Auto Shipping" loading="lazy"></div>
       </div>
 
-      <!-- Exotic & Luxury (image left) -->
-      <div class="service-row">
-        <div class="service-image"><img src="Truck3.png" alt="Exotic Shipping image"></div>
+      <!-- Exotic & Luxury -->
+      <div class="service-row reveal" data-delay="34">
+        <div class="service-image"><img src="Truck3.png" alt="Exotic & Luxury Auto Shipping" loading="lazy"></div>
         <div class="service-content">
           <h3>Exotic & Luxury Auto Shipping</h3>
           <p>
@@ -354,42 +410,42 @@
         </div>
       </div>
 
-      <!-- Dealer & Auctions (image right) -->
-      <div class="service-row reverse">
+      <!-- Dealer & Auctions -->
+      <div class="service-row reverse reveal" data-delay="36">
         <div class="service-content">
           <h3>Dealer & Auctions Shipping</h3>
           <p>
-            We work with hundreds of auto dealers nationwide. Serving new car managers, used car managers, internet sales managers, and fleet departments. From dealer trades, leasing, OVE, auction sales, internet and eBay sales. We ship anywhere in the United States. Whether you're shipping 1 or 100 we are your solution. Over the years we developed an extensive list of satisfied customers. Our auto transport specialist will work directly with your customers so you won't have to. Let us take the headache out of auto transport.
+            We work with hundreds of auto dealers nationwide. Serving new car managers, used car managers, internet sales managers, and fleet departments. From dealer trades, leasing, OVE, auction sales, internet and eBay sales. We ship anywhere in the United States. whether your shipping 1 or 100 we are your solution. Over the years we developed an extensive list of satisfied customers. Our auto transport specialist will work directly with your customers so you won't have to. Let us take the headache out of auto transport. Our door to door and coast to coast open and enclosed carriers are ideal for any of your transportation needs. Sign up as a preferred dealer through our dealer registration or call now and talk to a transport specialist.
           </p>
         </div>
-        <div class="service-image"><img src="Truck4.png" alt="Dealer & Auctions Shipping image"></div>
+        <div class="service-image"><img src="Truck4.png" alt="Dealer & Auctions Shipping" loading="lazy"></div>
       </div>
 
-      <!-- Boats Shipping (image left) -->
-      <div class="service-row">
-        <div class="service-image"><img src="Truck5.png" alt="Boats Shipping image"></div>
+      <!-- Boats Shipping -->
+      <div class="service-row reveal" data-delay="38">
+        <div class="service-image"><img src="Truck5.png" alt="Boats Shipping" loading="lazy"></div>
         <div class="service-content">
           <h3>Boats Shipping</h3>
           <p>
-            Door-to-door boat transportation service in continental US. Many boats are shipped via drive-away (must be on a trailer). Other options like flat-bed, step-deck and low-boy are available to accommodate most boat types. Contact us for custom quotes and equipment requirements.
+            Door-to-door boat transportation service in continental US. There are many types of ways to ship your boat. the most common way is called drive-away, with this service your boat MUST be on a trailer. Other services like flat-Bed, Step-deck and Low-Boy are also available to accommodate just about all boat types.
           </p>
         </div>
       </div>
 
-      <!-- Motorcycles Shipping (image right) -->
-      <div class="service-row reverse">
+      <!-- Motorcycles Shipping -->
+      <div class="service-row reverse reveal" data-delay="40">
         <div class="service-content">
           <h3>Motorcycles Shipping</h3>
           <p>
             Door-to-door motorcycle shipping in continental US. Your motorcycle can be shipped either crated or uncrated, and will travel with full insurance to its new destination. Open and enclosed carriers are available to accommodate the relocation of any motorcycle, sport bike, or chopper.
           </p>
         </div>
-        <div class="service-image"><img src="Truck6.png" alt="Motorcycle Shipping image"></div>
+        <div class="service-image"><img src="Truck6.png" alt="Motorcycle Shipping" loading="lazy"></div>
       </div>
 
-      <!-- RV Shipping (image left) -->
-      <div class="service-row">
-        <div class="service-image"><img src="Truck7.png" alt="RV Shipping image"></div>
+      <!-- RV Shipping -->
+      <div class="service-row reveal" data-delay="42">
+        <div class="service-image"><img src="Truck7.png" alt="RV Shipping" loading="lazy"></div>
         <div class="service-content">
           <h3>RV Shipping</h3>
           <p>
@@ -398,21 +454,21 @@
         </div>
       </div>
 
-      <!-- Inoperable Vehicles Shipping (image right) -->
-      <div class="service-row reverse">
+      <!-- Inoperable Vehicles Shipping -->
+      <div class="service-row reverse reveal" data-delay="44">
         <div class="service-content">
           <h3>Inoperable Vehicles Shipping</h3>
           <p>
-            Non-running vehicle? No problem. We specialize in transport of inoperable vehicles for auctions, tow yards, and insurance shops. If the car does not start a winch is generally used. For heavily damaged vehicles a roll-back or forklift may be required at pickup or delivery. Customers should inform the hauler ahead of time so proper equipment is ready. Whenever shipping cars without keys, wheels should be straight and transmission set to neutral if possible.
+            Non-running vehicle? No problem we specialize in transport of inoperable vehicles. We service all major auto auctions, tow yards, and insurance shops. No job is to big or too small. If the car does not start it is considered non-running. It is very important that the customer informs the car hauler ahead of time so that proper equipment is used. Generally if a car doesn’t start a winch is used to get the car on and off the trailer. Cars with extensive damage that can’t roll, need to be loaded by a roll-back tow truck or a forklift. It is always the responsibility of the customer to ensure that the right equipment is available. When picking up a vehicle at a auto auction a forklift is generally available, an adequate size forklift will also be necessary at the time of delivery. Whenever shipping cars that do not have keys, wheels must be straight and transmission be put in neutral. If those two things can't be done a tow truck will need to be hired for an extra fee to load the car onto the car carrier. A local tow truck will also be necessary to unload the vehicle at the delivery location.
           </p>
         </div>
-        <div class="service-image"><img src="Truck8.png" alt="Inoperable Vehicles image"></div>
+        <div class="service-image"><img src="Truck8.png" alt="Inoperable Vehicles" loading="lazy"></div>
       </div>
 
     </section>
 
     <!-- About -->
-    <section id="about" class="about" aria-label="About Shipping Experts">
+    <section id="about" class="about reveal" data-delay="46">
       <h2>About Shipping Experts</h2>
       <p>
         We are a team of shipping experts with years of experience.<br><br>
@@ -422,34 +478,33 @@
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px">
         <div style="background:#fff;padding:14px;border-radius:10px">
-          <h4>Vision</h4>
+          <h4>VISION</h4>
           <p class="muted" style="margin:6px 0 0;font-size:14px">To be the leading provider of safe and reliable auto transportation services by utilizing technology and innovation to ensure hassle-free shipping.</p>
         </div>
         <div style="background:#fff;padding:14px;border-radius:10px">
-          <h4>Mission</h4>
+          <h4>MISSION</h4>
           <p class="muted" style="margin:6px 0 0;font-size:14px">Provide reliable and efficient auto shipping services with transparent communication, competitive pricing, and timely delivery.</p>
         </div>
         <div style="background:#fff;padding:14px;border-radius:10px">
-          <h4>How</h4>
+          <h4>HOW</h4>
           <p class="muted" style="margin:6px 0 0;font-size:14px">We build strong relationships and put customers first — making auto shipping as easy and stress-free as possible.</p>
         </div>
         <div style="background:#fff;padding:14px;border-radius:10px">
-          <h4>Future</h4>
+          <h4>FUTURE</h4>
           <p class="muted" style="margin:6px 0 0;font-size:14px">Expansion, improved tech, and continued commitment to outstanding customer service — the future is about better, faster, simpler shipping.</p>
         </div>
       </div>
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="contact" aria-label="Contact Shipping Experts">
+    <section id="contact" class="contact reveal" data-delay="48">
       <h2>Contact Us</h2>
       <p class="muted">Prefer to talk? Call us or email our dispatch team and we'll get you a free quote.</p>
 
       <div class="contact-actions">
         <a class="phone-btn" href="tel:+19167607202">Call (916) 760-7202</a>
-        <a class="email-btn" href="mailto:dispatch@autoshippingexperts.com">Email dispatch@autoshippingexperts.com</a>
-        <a class="btn btn-secondary" href="#services">View Services</a>
-        <a class="btn btn-quote" href="#contact">Get Quote</a>
+        <a class="email-btn" href="mailto:dispatch@autoshippingexperts.com?subject=Request%20for%20a%20Quote">Email dispatch@autoshippingexperts.com</a>
+        <a class="btn btn-quote" href="#services">View Services</a>
       </div>
 
       <div style="margin-top:18px;display:flex;gap:18px;flex-wrap:wrap">
@@ -465,22 +520,22 @@
     </section>
 
     <!-- FAQ -->
-    <section class="faq" aria-label="Frequently Asked Questions">
+    <section class="faq reveal" data-delay="50">
       <h2>Frequently Asked Questions</h2>
 
       <div class="q">
         <strong>How long does shipping typically take?</strong>
-        <p class="muted">Placeholder answer: Transit time varies by route. Typical coast-to-coast shipments take 5–12 business days.</p>
+        <p class="muted">Transit time varies by route. Typical coast-to-coast shipments take 5–12 business days.</p>
       </div>
 
       <div class="q">
         <strong>Do you provide door-to-door service?</strong>
-        <p class="muted">Placeholder answer: Yes — door-to-door service is available for most routes. Dispatch will confirm details during booking.</p>
+        <p class="muted">Yes — door-to-door service is available for most routes. Dispatch will confirm details during booking.</p>
       </div>
 
       <div class="q">
         <strong>Is my vehicle insured during transit?</strong>
-        <p class="muted">Placeholder answer: Yes — carriers are insured. We provide insurance details on request and recommend confirming coverage at booking.</p>
+        <p class="muted">Yes — carriers are insured. We provide insurance details on request and recommend confirming coverage at booking.</p>
       </div>
 
     </section>
@@ -505,7 +560,7 @@
         7551 14th Ave Suite A<br>
         Sacramento, USA 95820<br>
         Phone: <a href="tel:+19167607202" style="color:#fff;text-decoration:underline">(916) 760-7202</a><br>
-        Email: <a href="mailto:dispatch@autoshippingexperts.com" style="color:#fff;text-decoration:underline">dispatch@autoshippingexperts.com</a>
+        Email: <a href="mailto:dispatch@autoshippingexperts.com?subject=Request%20for%20a%20Quote" style="color:#fff;text-decoration:underline">dispatch@autoshippingexperts.com</a>
       </div>
 
       <div style="min-width:220px;text-align:right">
@@ -519,73 +574,211 @@
     </div>
   </footer>
 
-  <!-- Minimal JS for slideshow + small UI behavior -->
+  <!-- Inline JavaScript -->
   <script>
+  (function(){
+    // --- Utilities ---
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+    const formatNumber = (n, decimals=0) => {
+      if(decimals>0) return Number(n).toFixed(decimals);
+      return Math.round(n).toLocaleString();
+    };
+
+    // --- Intro loader logic ---
+    const loader = $('#loader');
+    const intro = $('#introVideo');
+    const skipBtn = $('#skipIntro');
+    let loaderHidden = false;
+
+    function hideLoader() {
+      if(loaderHidden) return;
+      loaderHidden = true;
+      loader.classList.add('hidden');
+      // allow scrolling now
+      document.documentElement.style.overflow = '';
+      // start slideshow autoplay after reveal
+      startSlideshow();
+      // trigger initial reveals
+      observeReveals();
+    }
+
+    // Ensure page not scrollable during intro
+    document.documentElement.style.overflow = 'hidden';
+
+    // When video ends or 5s timeout -> hide loader
+    let introTimeout = setTimeout(()=>{ try{ intro.pause(); }catch(e){} hideLoader(); }, 5000);
+    intro.addEventListener('ended', ()=>{ clearTimeout(introTimeout); hideLoader(); });
+    skipBtn.addEventListener('click', ()=>{ clearTimeout(introTimeout); hideLoader(); });
+
+    // If video fails to play (autoplay blocked) allow skip after 1s
+    setTimeout(()=>{ if(intro.paused) { intro.play().catch(()=>{}); } }, 700);
+
+    // If user clicks anywhere on loader, skip
+    loader.addEventListener('click', (e)=>{
+      if(e.target === loader || e.target === skipBtn){ clearTimeout(introTimeout); hideLoader(); }
+    });
+
+    // --- Hero headline variant via querystring (AB test hook) ---
     (function(){
-      // Simple slideshow
-      const slides = Array.from(document.querySelectorAll('.slide'));
-      const pagination = document.getElementById('pagination');
-      let idx = 0;
-      let timer = null;
-      const total = slides.length;
-
-      function renderPagination(){
-        pagination.innerHTML = '';
-        for(let i=0;i<total;i++){
-          const d = document.createElement('div');
-          d.className = 'dot' + (i===idx? ' active':'');
-          d.dataset.i = i;
-          d.addEventListener('click', ()=>{ goTo(parseInt(d.dataset.i)); pauseAuto(); });
-          pagination.appendChild(d);
-        }
-      }
-
-      function show(){
-        slides.forEach((s,i)=> s.classList.toggle('active', i===idx));
-        renderPagination();
-      }
-
-      function goTo(i){
-        idx = (i+total)%total;
-        show();
-      }
-
-      function next(){
-        goTo(idx+1);
-      }
-      function prev(){
-        goTo(idx-1);
-      }
-
-      function startAuto(){
-        timer = setInterval(next, 4200);
-      }
-      function pauseAuto(){
-        clearInterval(timer);
-        timer = null;
-      }
-
-      document.getElementById('next').addEventListener('click', ()=>{ next(); pauseAuto(); });
-      document.getElementById('prev').addEventListener('click', ()=>{ prev(); pauseAuto(); });
-
-      // init
-      show();
-      startAuto();
-
-      // keep slideshow working when user switches tabs quickly
-      document.addEventListener('visibilitychange', ()=>{
-        if(document.hidden) pauseAuto(); else if(!timer) startAuto();
-      });
-
-      // smooth anchor scrolling
-      document.querySelectorAll('a[href^="#"]').forEach(a=>{
-        a.addEventListener('click', (e)=>{
-          const target = document.querySelector(a.getAttribute('href'));
-          if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
-        });
-      });
-
+      const params = new URLSearchParams(location.search);
+      const v = params.get('variant');
+      const hero = $('#heroHeadline');
+      if(v === '2'){
+        hero.textContent = 'Luxury care for every vehicle — coast to coast.';
+      } else if(v === '3'){
+        hero.textContent = 'Safe. Insured. On time — that’s Shipping Experts.';
+      } // default left in HTML
     })();
+
+    // --- Slideshow (fade) ---
+    const slides = $$('.slide');
+    let current = 0;
+    let slideTimer = null;
+    function showSlide(i){
+      slides.forEach((s,idx)=> s.classList.toggle('active', idx===i));
+      current = i;
+    }
+    function nextSlide(){ showSlide((current+1)%slides.length) }
+    function startSlideshow(){ if(slideTimer) return; slideTimer = setInterval(nextSlide, 4200); }
+    function stopSlideshow(){ clearInterval(slideTimer); slideTimer = null; }
+    // pause when user tabs away
+    document.addEventListener('visibilitychange', ()=>{ if(document.hidden) stopSlideshow(); else startSlideshow(); });
+
+    // --- Lightbox gallery (works for hero + services) ---
+    const lightbox = $('#lightbox');
+    const lbImage = $('#lbImage');
+    const lbClose = $('#lbClose');
+    const lbPrev = $('#lbPrev'); const lbNext = $('#lbNext');
+    // collect images to gallery
+    const galleryImgs = $$('img[alt*="Truck"], .service-image img');
+    const gallerySrc = galleryImgs.map(i => i.getAttribute('src'));
+    let lbIndex = 0;
+    function openLightbox(idx){
+      lbIndex = (idx+gallerySrc.length)%gallerySrc.length;
+      lbImage.src = gallerySrc[lbIndex];
+      lightbox.classList.add('visible'); lightbox.setAttribute('aria-hidden','false');
+    }
+    function closeLightbox(){ lightbox.classList.remove('visible'); lightbox.setAttribute('aria-hidden','true'); lbImage.src=''; }
+    function lbPrevFn(){ openLightbox(lbIndex-1); }
+    function lbNextFn(){ openLightbox(lbIndex+1); }
+
+    galleryImgs.forEach((img, idx)=>{
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', (e)=>{ e.stopPropagation(); openLightbox(idx); });
+    });
+    lbClose.addEventListener('click', closeLightbox);
+    lbPrev.addEventListener('click', lbPrevFn);
+    lbNext.addEventListener('click', lbNextFn);
+    lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+    window.addEventListener('keydown', (e)=>{ if(lightbox.classList.contains('visible')){ if(e.key==='Escape') closeLightbox(); if(e.key==='ArrowLeft') lbPrevFn(); if(e.key==='ArrowRight') lbNextFn(); } });
+
+    // --- Animated stat counters when in view ---
+    const counters = $$('.stat .num');
+    const countOpts = {root:null,rootMargin:'0px',threshold:0.45};
+    function animateCount(el){
+      const targetAttr = el.dataset.count;
+      const decimals = parseInt(el.dataset.decimals || '0');
+      const target = Number(targetAttr);
+      const duration = 1400;
+      const start = performance.now();
+      const initial = 0;
+      function step(now){
+        const t = Math.min(1,(now-start)/duration);
+        const eased = t*(2-t); // simple easeOutQuad
+        const value = initial + (target - initial) * eased;
+        el.textContent = (decimals ? value.toFixed(decimals) : Math.round(value).toLocaleString());
+        if(t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    const counterObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          animateCount(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, countOpts);
+    counters.forEach(c => counterObserver.observe(c));
+
+    // --- Reveal on scroll for sections (staggered) ---
+    const revealEls = $$('.reveal');
+    let revealObserved = false;
+    function observeReveals(){
+      if(revealObserved) return;
+      revealObserved = true;
+      const observer = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            const el = entry.target;
+            const delay = Number(el.dataset.delay || 0);
+            setTimeout(()=> el.classList.add('in-view'), delay);
+            observer.unobserve(el);
+          }
+        });
+      }, {root:null,threshold:0.12});
+      revealEls.forEach(e=> observer.observe(e));
+    }
+
+    // If loader already hidden, start observing reveals now
+    if(loaderHidden) observeReveals();
+
+    // --- Button ripple effect for .btn elements ---
+    function createRipple(e){
+      const btn = e.currentTarget;
+      const rect = btn.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      const size = Math.max(rect.width, rect.height)*1.6;
+      ripple.style.position = 'absolute';
+      ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.borderRadius = '50%';
+      ripple.style.background = 'radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.08) 35%, transparent 60%)';
+      ripple.style.opacity = '0.95';
+      ripple.style.transform = 'scale(0)';
+      ripple.style.pointerEvents = 'none';
+      ripple.style.transition = 'transform .6s cubic-bezier(.2,.9,.3,1), opacity .6s ease';
+      ripple.style.zIndex = 10;
+      ripple.className = 'btn-ripple';
+      btn.style.position = 'relative';
+      btn.appendChild(ripple);
+      requestAnimationFrame(()=> {
+        ripple.style.transform = 'scale(1)';
+        ripple.style.opacity = '0';
+      });
+      setTimeout(()=> ripple.remove(), 650);
+    }
+    $$('.btn').forEach(b => b.addEventListener('click', createRipple));
+
+    // --- Simple form: mailto with subject already implemented in hrefs above -- done via markup ---
+
+    // --- Lazy loading: already added loading="lazy" attributes on images above ---
+
+    // --- Start slide show after loader hidden (if the loader is already hidden) ---
+    if(loaderHidden) startSlideshow();
+
+    // --- When page loaded, attach event listeners for slideshow manual nav (optional) ---
+    // (We keep slideshow simple: auto-fade only. If you want prev/next UI, I can add it.)
+    // startSlideshow(); // started once loader hidden
+
+    // --- Make sure reveal observer runs even if loader wasn't used (safety) ---
+    window.addEventListener('load', ()=> { setTimeout(()=> observeReveals(), 60); });
+
+    // --- Final: small enhancement — smooth anchor scrolling for internal links ---
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const target = document.querySelector(a.getAttribute('href'));
+        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+    // If user resizes or does something weird, ensure layout remains sane:
+    window.addEventListener('resize', ()=>{ /* No-op for now, reserved for future adjustments */ });
+
+  })();
   </script>
+
 </body>
 </html>
