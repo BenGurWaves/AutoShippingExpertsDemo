@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shipping Experts — Auto Shipping Experts</title>
+
+  <!-- Google font (DM Sans) -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --orange: #FF6700;
+      --orange-dark: #e55600;
+      --muted: #6b7280;
+      --bg: #f7f7f8;
+      --card: #ffffff;
+      --max-width: 1200px;
+      --radius: 12px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"DM Sans",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      color:#0f172a;
+      background:var(--bg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Container */
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:28px 20px;}
+
+    /* Header */
+    header.site-header{
+      background: linear-gradient(90deg,var(--orange) 0%, #ffffff 60%);
+      position:sticky;
+      top:0;
+      z-index:60;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      border-bottom-left-radius:10px;
+      border-bottom-right-radius:10px;
+    }
+    .header-inner{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;gap:20px;padding:14px 20px;}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{height:48px;width:auto;display:block}
+    .brand h1{font-size:18px;margin:0;font-weight:700;color:#081126;letter-spacing:0.2px}
+    nav.main-nav{margin-left:20px;flex:1}
+    nav ul{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
+    nav a{color:#081126;text-decoration:none;font-weight:500;padding:8px 10px;border-radius:8px}
+    nav a:hover{background:rgba(0,0,0,0.04)}
+    .cta{
+      margin-left:auto;
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .btn{
+      border:0;
+      padding:10px 16px;
+      border-radius:10px;
+      font-weight:700;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      text-decoration:none;
+    }
+    .btn-quote{
+      background: linear-gradient(180deg,var(--orange) 0%, var(--orange-dark) 100%);
+      color:#fff;
+      box-shadow: 0 8px 24px rgba(255,103,0,0.18);
+    }
+    .btn-secondary{
+      background:transparent;
+      color:#081126;
+      padding:8px 12px;
+      border-radius:8px;
+      border:1px solid rgba(0,0,0,0.06);
+    }
+
+    /* Hero slideshow */
+    .hero{
+      margin-top:26px;
+    }
+    .slideshow{
+      position:relative;
+      border-radius:12px;
+      overflow:hidden;
+      background:#111;
+      height:420px;
+      box-shadow:0 12px 30px rgba(8,17,38,0.06);
+    }
+    .slides{display:flex;height:100%;width:100%}
+    .slide{
+      min-width:100%;
+      transition:opacity .8s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:absolute;
+      inset:0;
+      opacity:0;
+      object-fit:cover;
+    }
+    .slide img{width:100%;height:100%;object-fit:cover;display:block}
+    .slide.active{opacity:1;position:relative}
+
+    .slideshow-controls{
+      position:absolute;left:12px;right:12px;bottom:18px;display:flex;justify-content:space-between;gap:12px;
+      pointer-events:none;
+    }
+    .slideshow-controls .left,
+    .slideshow-controls .right{pointer-events:auto;background:rgba(255,255,255,0.9);border-radius:8px;padding:8px;backdrop-filter:blur(4px)}
+    .slideshow-pagination{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;display:flex;gap:8px}
+    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.6);cursor:pointer}
+    .dot.active{background:var(--orange)}
+
+    /* thin CTA band */
+    .thin-cta{margin:18px 0;padding:14px;border-radius:10px;background:linear-gradient(90deg,#fff 0%, rgba(255,255,255,0.85) 40%);display:flex;align-items:center;justify-content:center;gap:12px}
+    .thin-cta .btn-quote{padding:10px 18px}
+
+    /* Stats / trust */
+    .trust{
+      background:linear-gradient(180deg,#fff 0%, #fbfbfb 100%);
+      border-radius:12px;padding:28px;margin-top:18px;text-align:center;box-shadow:0 8px 20px rgba(15,23,42,.04)
+    }
+    .trust h2{margin:0 0 18px;font-size:22px}
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:10px 0 18px}
+    .stat{
+      background:linear-gradient(180deg,#fff,#fff);
+      padding:18px;border-radius:10px;border:1px solid rgba(10,10,10,0.03)
+    }
+    .stat .num{font-weight:700;font-size:20px;color:var(--orange)}
+    .stat .label{color:var(--muted);font-size:13px;margin-top:6px}
+    .trust .cta-row{margin-top:12px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .phone-btn{background:#081126;color:#fff;padding:12px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+    .email-btn{background:transparent;border:2px solid var(--orange);color:var(--orange);padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none}
+
+    /* Explaining / How it works */
+    .how{
+      margin-top:26px;padding:26px;background:transparent;border-radius:12px;
+    }
+    .how h2{font-size:20px;text-align:center;margin-bottom:12px}
+    .steps{display:flex;flex-direction:column;gap:12px;max-width:900px;margin:0 auto}
+    .step{background:var(--card);padding:16px;border-radius:10px;border:1px solid rgba(10,10,10,0.04)}
+    .step h3{margin:0 0 6px}
+    .step p{margin:0;color:var(--muted);font-size:14px}
+
+    /* Services */
+    .services{margin-top:26px;padding:10px 0}
+    .services h2{text-align:center;margin-bottom:18px}
+    .service-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center;margin:20px 0;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff);box-shadow:0 8px 20px rgba(8,17,38,0.04)}
+    .service-row.reverse{direction:ltr}
+    .service-image img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+    .service-content h3{margin:0 0 8px}
+    .service-content p{color:var(--muted);margin:0;line-height:1.5}
+
+    /* make alternating layout easier on small screens */
+    @media (max-width:880px){
+      nav ul{display:none}
+      .header-inner{padding:12px}
+      .slideshow{height:260px}
+      .service-row{grid-template-columns:1fr; text-align:left}
+      .service-row .service-image{order:0}
+      .service-row.reverse .service-image{order:0}
+      .wrap{padding:16px}
+    }
+
+    /* About, Contact, FAQ, Footer */
+    .about, .contact, .faq{margin-top:26px;padding:22px;background:linear-gradient(180deg,#fff,#fcfcfc);border-radius:12px}
+    .about h2,.contact h2,.faq h2{margin-top:0}
+    .contact .contact-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+    .faq .q{padding:12px;border-radius:8px;background:#fff;margin-bottom:8px}
+
+    footer.site-footer{
+      margin-top:28px;background:#060606;color:#efefef;padding:28px 20px;border-radius:10px;
+    }
+    footer .footer-inner{max-width:var(--max-width);margin:0 auto;display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:flex-start}
+    footer .links{display:flex;gap:18px;flex-direction:column}
+    footer a{color:#efefef;text-decoration:none}
+    footer .address{max-width:360px;font-size:14px;color:#d6d6d6}
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="brand" aria-label="Shipping Experts brand">
+        <img src="Logo.png" alt="Shipping Experts logo" />
+        <div>
+          <h1>Shipping Experts</h1>
+          <div class="muted" style="font-size:12px">autoshippingexperts</div>
+        </div>
+      </div>
+
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="cta">
+        <a class="btn btn-secondary" href="#contact">Get Quote</a>
+        <a class="btn btn-quote" href="#contact">Get Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="home" role="main">
+
+    <!-- Hero slideshow -->
+    <section class="hero" aria-label="Hero slideshow">
+      <div class="slideshow" id="slideshow">
+        <!-- Slides: Truck1.png -> Truck8.png -->
+        <div class="slides">
+          <div class="slide active"><img src="Truck1.png" alt="Truck 1"></div>
+          <div class="slide"><img src="Truck2.png" alt="Truck 2"></div>
+          <div class="slide"><img src="Truck3.png" alt="Truck 3"></div>
+          <div class="slide"><img src="Truck4.png" alt="Truck 4"></div>
+          <div class="slide"><img src="Truck5.png" alt="Truck 5"></div>
+          <div class="slide"><img src="Truck6.png" alt="Truck 6"></div>
+          <div class="slide"><img src="Truck7.png" alt="Truck 7"></div>
+          <div class="slide"><img src="Truck8.png" alt="Truck 8"></div>
+        </div>
+
+        <div class="slideshow-controls" aria-hidden="false">
+          <div class="left">
+            <button id="prev" aria-label="Previous slide" style="background:none;border:none;cursor:pointer;font-weight:700;">◀</button>
+          </div>
+
+          <div class="right" style="display:flex;gap:8px;align-items:center;">
+            <button id="next" aria-label="Next slide" style="background:none;border:none;cursor:pointer;font-weight:700;">▶</button>
+          </div>
+        </div>
+
+        <div class="slideshow-pagination" id="pagination" aria-hidden="false"></div>
+      </div>
+    </section>
+
+    <!-- thin CTA band -->
+    <section class="thin-cta" role="region" aria-label="Quick Quote CTA">
+      <div style="max-width:var(--max-width);width:100%;display:flex;align-items:center;justify-content:center;gap:12px;">
+        <strong style="font-size:16px">Ready to ship your vehicle?</strong>
+        <a class="btn btn-quote" href="#contact">Get Quote</a>
+      </div>
+    </section>
+
+    <!-- Trust / Stats -->
+    <section class="trust" aria-label="Trust and statistics">
+      <h2>Trust In The Experts</h2>
+
+      <div class="stat-grid" role="list">
+        <div class="stat" role="listitem">
+          <div class="num">1,250</div>
+          <div class="label">Vehicles Shipped Monthly</div>
+        </div>
+        <div class="stat" role="listitem">
+          <div class="num">982,370</div>
+          <div class="label">Customers Helped</div>
+        </div>
+        <div class="stat" role="listitem">
+          <div class="num">4.7</div>
+          <div class="label">Company Rating</div>
+        </div>
+        <div class="stat" role="listitem">
+          <div class="num">20+</div>
+          <div class="label">Years in Service</div>
+        </div>
+      </div>
+
+      <div class="center" style="margin-top:6px">
+        <div style="font-weight:700;margin-bottom:8px">Get Your Free Quote Now</div>
+        <div class="cta-row">
+          <a class="phone-btn" href="tel:+19167607202">Call (916) 760-7202</a>
+          <a class="email-btn" href="mailto:dispatch@autoshippingexperts.com">Email dispatch@autoshippingexperts.com</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How Car Shipping Works (explaining) -->
+    <section class="how" aria-label="How Car Shipping Works">
+      <h2>How Car Shipping Works</h2>
+      <div class="steps" role="list">
+        <div class="step" role="listitem">
+          <h3>Booking</h3>
+          <p>Choose a pickup and delivery window, provide vehicle information, and select the shipping option (open or enclosed). We'll confirm availability and send a transparent quote.</p>
+        </div>
+
+        <div class="step" role="listitem">
+          <h3>Pickup</h3>
+          <p>Carrier dispatch coordinates a pickup. Driver inspects your vehicle and records condition before loading. We confirm pickup time and driver details before arrival.</p>
+        </div>
+
+        <div class="step" role="listitem">
+          <h3>Shipping</h3>
+          <p>Your vehicle is transported across state lines on scheduled routes. Our carriers communicate regularly and provide updates during transit, ensuring safe handling.</p>
+        </div>
+
+        <div class="step" role="listitem">
+          <h3>Delivery</h3>
+          <p>Carrier notifies the recipient ahead of arrival. A final inspection is performed at delivery and proof of delivery is provided. Any questions? We stay available until you're satisfied.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="services" aria-label="Services">
+      <h2>Services</h2>
+
+      <!-- Open Auto Shipping (image left) -->
+      <div class="service-row" id="open-auto">
+        <div class="service-image"><img src="Truck1.png" alt="Open Auto Shipping image"></div>
+        <div class="service-content">
+          <h3>Open Auto Shipping</h3>
+          <p>
+            Open carrier car shipping is the standard method of transporting a vehicle. Your vehicle will be transported on an open car carrier, commonly seen delivering new cars to dealerships. If your move consists of transporting standard daily vehicles the open transport is your preferred choice and is the most cost effective way of transporting your vehicle. Most daily vehicles are exposed to weather elements and do not require the added expense of an enclosed transport. Regardless of which option you choose we strive on providing excellence when transporting your vehicle. However, because the vehicles on the open carrier are not enclosed during transport, customers should beware that their car is not safeguarded from possible road perils. The vehicles on the carrier are exposed to rough weather, fly away debris, rocks, dirt, fluid drips, or other hazards.
+          </p>
+        </div>
+      </div>
+
+      <!-- Enclosed Auto Shipping (image right) -->
+      <div class="service-row reverse">
+        <div class="service-content">
+          <h3>Enclosed Auto Shipping</h3>
+          <p>
+            An enclosed auto carrier provides maximum security for your vehicle during transportation. If you're shipping exotic, luxury, classic or custom vehicles our enclosed transport service would be your preferred option. Enclosed auto transport will protect your car and insure complete safety from any type of weather or road conditions that may occur during shipping. Our enclosed carriers range in size so no matter what type of car you own we can ship it. Whenever shipping with Auto Shipping Experts you will have the security of knowing your precious cargo is in the right hands.
+          </p>
+        </div>
+        <div class="service-image"><img src="Truck2.png" alt="Enclosed Auto Shipping image"></div>
+      </div>
+
+      <!-- Exotic & Luxury (image left) -->
+      <div class="service-row">
+        <div class="service-image"><img src="Truck3.png" alt="Exotic Shipping image"></div>
+        <div class="service-content">
+          <h3>Exotic & Luxury Auto Shipping</h3>
+          <p>
+            Are you looking to transport an exotic or luxury car? When it comes to exotic or luxury car transport we recognize that your car is irreplaceable and needs to be handle with the utmost respect. We understand what it takes and are passionate about making sure your car arrives in perfect condition. Your vehicle will be fully insured and it will be a door to door service without the use terminals. Whenever shipping with Auto Shipping Experts you will have the security of knowing your precious cargo is in the right hands.
+          </p>
+        </div>
+      </div>
+
+      <!-- Dealer & Auctions (image right) -->
+      <div class="service-row reverse">
+        <div class="service-content">
+          <h3>Dealer & Auctions Shipping</h3>
+          <p>
+            We work with hundreds of auto dealers nationwide. Serving new car managers, used car managers, internet sales managers, and fleet departments. From dealer trades, leasing, OVE, auction sales, internet and eBay sales. We ship anywhere in the United States. Whether you're shipping 1 or 100 we are your solution. Over the years we developed an extensive list of satisfied customers. Our auto transport specialist will work directly with your customers so you won't have to. Let us take the headache out of auto transport.
+          </p>
+        </div>
+        <div class="service-image"><img src="Truck4.png" alt="Dealer & Auctions Shipping image"></div>
+      </div>
+
+      <!-- Boats Shipping (image left) -->
+      <div class="service-row">
+        <div class="service-image"><img src="Truck5.png" alt="Boats Shipping image"></div>
+        <div class="service-content">
+          <h3>Boats Shipping</h3>
+          <p>
+            Door-to-door boat transportation service in continental US. Many boats are shipped via drive-away (must be on a trailer). Other options like flat-bed, step-deck and low-boy are available to accommodate most boat types. Contact us for custom quotes and equipment requirements.
+          </p>
+        </div>
+      </div>
+
+      <!-- Motorcycles Shipping (image right) -->
+      <div class="service-row reverse">
+        <div class="service-content">
+          <h3>Motorcycles Shipping</h3>
+          <p>
+            Door-to-door motorcycle shipping in continental US. Your motorcycle can be shipped either crated or uncrated, and will travel with full insurance to its new destination. Open and enclosed carriers are available to accommodate the relocation of any motorcycle, sport bike, or chopper.
+          </p>
+        </div>
+        <div class="service-image"><img src="Truck6.png" alt="Motorcycle Shipping image"></div>
+      </div>
+
+      <!-- RV Shipping (image left) -->
+      <div class="service-row">
+        <div class="service-image"><img src="Truck7.png" alt="RV Shipping image"></div>
+        <div class="service-content">
+          <h3>RV Shipping</h3>
+          <p>
+            We offer door-to-door RV transport solutions across the continental US. From travel trailers to motorhomes, our carriers and equipment are selected to safely handle larger vehicles. Each RV move is assessed for size, clearance, and required permits to ensure a smooth, on-time delivery.
+          </p>
+        </div>
+      </div>
+
+      <!-- Inoperable Vehicles Shipping (image right) -->
+      <div class="service-row reverse">
+        <div class="service-content">
+          <h3>Inoperable Vehicles Shipping</h3>
+          <p>
+            Non-running vehicle? No problem. We specialize in transport of inoperable vehicles for auctions, tow yards, and insurance shops. If the car does not start a winch is generally used. For heavily damaged vehicles a roll-back or forklift may be required at pickup or delivery. Customers should inform the hauler ahead of time so proper equipment is ready. Whenever shipping cars without keys, wheels should be straight and transmission set to neutral if possible.
+          </p>
+        </div>
+        <div class="service-image"><img src="Truck8.png" alt="Inoperable Vehicles image"></div>
+      </div>
+
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about" aria-label="About Shipping Experts">
+      <h2>About Shipping Experts</h2>
+      <p>
+        We are a team of shipping experts with years of experience.<br><br>
+        <strong>About Shipping Experts, INC.</strong><br>
+        Shipping Experts is one of the country's top Auto Transport companies. We specialize in the shipping of privately owned vehicles. We are a solid carrier that prides itself with the relationships that we build with our customers. When choosing Shipping Experts customers cut out the middle man, connecting directly to the carrier gives customers a high-quality shipping experience at a fair price. We are a talented team of people with a passion for Auto shipping logistics and working with customers that need our help. Give us a call today for an instant quote. Thank you for considering Shipping Experts for your auto transport needs!
+      </p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px">
+        <div style="background:#fff;padding:14px;border-radius:10px">
+          <h4>Vision</h4>
+          <p class="muted" style="margin:6px 0 0;font-size:14px">To be the leading provider of safe and reliable auto transportation services by utilizing technology and innovation to ensure hassle-free shipping.</p>
+        </div>
+        <div style="background:#fff;padding:14px;border-radius:10px">
+          <h4>Mission</h4>
+          <p class="muted" style="margin:6px 0 0;font-size:14px">Provide reliable and efficient auto shipping services with transparent communication, competitive pricing, and timely delivery.</p>
+        </div>
+        <div style="background:#fff;padding:14px;border-radius:10px">
+          <h4>How</h4>
+          <p class="muted" style="margin:6px 0 0;font-size:14px">We build strong relationships and put customers first — making auto shipping as easy and stress-free as possible.</p>
+        </div>
+        <div style="background:#fff;padding:14px;border-radius:10px">
+          <h4>Future</h4>
+          <p class="muted" style="margin:6px 0 0;font-size:14px">Expansion, improved tech, and continued commitment to outstanding customer service — the future is about better, faster, simpler shipping.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact" aria-label="Contact Shipping Experts">
+      <h2>Contact Us</h2>
+      <p class="muted">Prefer to talk? Call us or email our dispatch team and we'll get you a free quote.</p>
+
+      <div class="contact-actions">
+        <a class="phone-btn" href="tel:+19167607202">Call (916) 760-7202</a>
+        <a class="email-btn" href="mailto:dispatch@autoshippingexperts.com">Email dispatch@autoshippingexperts.com</a>
+        <a class="btn btn-secondary" href="#services">View Services</a>
+        <a class="btn btn-quote" href="#contact">Get Quote</a>
+      </div>
+
+      <div style="margin-top:18px;display:flex;gap:18px;flex-wrap:wrap">
+        <div style="min-width:240px;background:#fff;padding:12px;border-radius:10px">
+          <strong>Address</strong>
+          <p class="muted" style="margin:6px 0 0">7551 14th Ave Suite A<br>Sacramento, USA 95820</p>
+        </div>
+        <div style="min-width:240px;background:#fff;padding:12px;border-radius:10px">
+          <strong>Hours</strong>
+          <p class="muted" style="margin:6px 0 0">Mon–Fri 9:00am–6:00pm</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" aria-label="Frequently Asked Questions">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="q">
+        <strong>How long does shipping typically take?</strong>
+        <p class="muted">Placeholder answer: Transit time varies by route. Typical coast-to-coast shipments take 5–12 business days.</p>
+      </div>
+
+      <div class="q">
+        <strong>Do you provide door-to-door service?</strong>
+        <p class="muted">Placeholder answer: Yes — door-to-door service is available for most routes. Dispatch will confirm details during booking.</p>
+      </div>
+
+      <div class="q">
+        <strong>Is my vehicle insured during transit?</strong>
+        <p class="muted">Placeholder answer: Yes — carriers are insured. We provide insurance details on request and recommend confirming coverage at booking.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div>
+        <img src="Logo.png" alt="Shipping Experts logo" style="height:44px;margin-bottom:8px;display:block">
+        <nav class="links" aria-label="Footer links">
+          <a href="#home">Home</a>
+          <a href="#about">About Us</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact Us</a>
+        </nav>
+      </div>
+
+      <div class="address">
+        <strong>Shipping Experts INC.</strong><br>
+        7551 14th Ave Suite A<br>
+        Sacramento, USA 95820<br>
+        Phone: <a href="tel:+19167607202" style="color:#fff;text-decoration:underline">(916) 760-7202</a><br>
+        Email: <a href="mailto:dispatch@autoshippingexperts.com" style="color:#fff;text-decoration:underline">dispatch@autoshippingexperts.com</a>
+      </div>
+
+      <div style="min-width:220px;text-align:right">
+        <div style="font-size:14px;color:#cfcfcf">© 2023 Shipping Experts INC. | All Rights Reserved</div>
+        <div style="margin-top:8px">
+          <a href="#" style="color:#cfcfcf;margin-right:12px">Privacy Policy</a>
+          <a href="#" style="color:#cfcfcf;margin-right:12px">Copyright & Trademark</a>
+          <a href="#" style="color:#cfcfcf">Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Minimal JS for slideshow + small UI behavior -->
+  <script>
+    (function(){
+      // Simple slideshow
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const pagination = document.getElementById('pagination');
+      let idx = 0;
+      let timer = null;
+      const total = slides.length;
+
+      function renderPagination(){
+        pagination.innerHTML = '';
+        for(let i=0;i<total;i++){
+          const d = document.createElement('div');
+          d.className = 'dot' + (i===idx? ' active':'');
+          d.dataset.i = i;
+          d.addEventListener('click', ()=>{ goTo(parseInt(d.dataset.i)); pauseAuto(); });
+          pagination.appendChild(d);
+        }
+      }
+
+      function show(){
+        slides.forEach((s,i)=> s.classList.toggle('active', i===idx));
+        renderPagination();
+      }
+
+      function goTo(i){
+        idx = (i+total)%total;
+        show();
+      }
+
+      function next(){
+        goTo(idx+1);
+      }
+      function prev(){
+        goTo(idx-1);
+      }
+
+      function startAuto(){
+        timer = setInterval(next, 4200);
+      }
+      function pauseAuto(){
+        clearInterval(timer);
+        timer = null;
+      }
+
+      document.getElementById('next').addEventListener('click', ()=>{ next(); pauseAuto(); });
+      document.getElementById('prev').addEventListener('click', ()=>{ prev(); pauseAuto(); });
+
+      // init
+      show();
+      startAuto();
+
+      // keep slideshow working when user switches tabs quickly
+      document.addEventListener('visibilitychange', ()=>{
+        if(document.hidden) pauseAuto(); else if(!timer) startAuto();
+      });
+
+      // smooth anchor scrolling
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', (e)=>{
+          const target = document.querySelector(a.getAttribute('href'));
+          if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>
