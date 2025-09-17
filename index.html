@@ -1131,6 +1131,34 @@ header {
   } catch(e){/* silent */}
 })();
 </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const loader = document.getElementById("loader");
+    const skipBtn = loader?.querySelector(".skip");
+    const loaderVideo = loader?.querySelector("video");
+
+    // Hide loader function
+    function hideLoader() {
+      if (loader && !loader.classList.contains("hidden")) {
+        loader.classList.add("hidden");
+      }
+    }
+
+    // When video finishes, hide loader
+    if (loaderVideo) {
+      loaderVideo.addEventListener("ended", hideLoader);
+    }
+
+    // When skip button is clicked, hide loader
+    if (skipBtn) {
+      skipBtn.addEventListener("click", hideLoader);
+    }
+
+    // Safety timeout fallback (in case video fails)
+    setTimeout(hideLoader, 15000); // 15 seconds max
+  });
+</script>
+
 
 </body>
 </html>
