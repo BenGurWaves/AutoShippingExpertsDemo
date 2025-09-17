@@ -193,17 +193,6 @@
     .contact .contact-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;justify-content:center}
     .faq .q{padding:12px;border-radius:8px;background:#fff;margin-bottom:8px}
 
-    /* Footer layout per your spec */
-    footer.site-footer{margin-top:28px;background:#070707;color:#efefef;padding:36px 20px;border-radius:10px}
-    .footer-top{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.04)}
-    .footer-top .links{display:flex;gap:14px;align-items:center}
-    .footer-top .links a{color:#fff;font-weight:600}
-    .footer-center{max-width:var(--maxw);margin:18px auto 0;text-align:center;line-height:1.6}
-    .footer-center .spacer{height:12px}
-    .footer-legal{max-width:var(--maxw);margin:18px auto 0;text-align:center;color:#bfbfbf;font-size:14px}
-
-    .footer-logo img{height:56px;width:auto;object-fit:contain}
-
     /* Lightbox */
     .lightbox{position:fixed;inset:0;background:rgba(3,6,11,0.88);display:none;align-items:center;justify-content:center;padding:20px;z-index:99998}
     .lightbox.visible{display:flex}
@@ -231,31 +220,45 @@
     /* focus styles for accessibility */
     button:focus, a:focus{outline:3px solid rgba(255,103,0,0.14);outline-offset:3px}
 
-    .footer-logo {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.footer-logo img {
-  height: 60px; /* adjust size as needed */
-  width: auto;  /* keeps it from stretching */
-}
-
-.footer-links {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.footer-links a {
-  color: #fff; /* or whatever your footer text color is */
-  text-decoration: none;
-  margin: 0 10px;
-  font-weight: 500;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
+   /* Footer layout per your spec */
+    footer.site-footer {
+      margin-top: 28px;
+      background: #070707;
+      color: #efefef;
+      padding: 36px 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    footer.site-footer img {
+      height: 60px;
+      width: auto;
+      margin-bottom: 14px;
+    }
+    footer .footer-links {
+      margin: 10px 0 20px;
+    }
+    footer .footer-links a {
+      margin: 0 10px;
+      color: #efefef;
+      font-weight: 600;
+    }
+    footer .footer-links a:hover {
+      color: var(--orange);
+    }
+    footer .footer-row {
+      margin: 6px 0;
+    }
+    footer .legal-links {
+      margin-top: 16px;
+    }
+    footer .legal-links a {
+      margin: 0 12px;
+      font-size: 14px;
+      color: #aaa;
+    }
+    footer .legal-links a:hover {
+      color: #fff;
+    }
 
   </style>
 
@@ -591,44 +594,37 @@
 
   </main>
 
-  <!-- Footer (reworked per your rows) -->
-  <footer class="site-footer" role="contentinfo" aria-label="Footer">
-    <div class="footer-top">
-      <div class="footer-left" style="display:flex;align-items:center;gap:18px">
-        <div class="footer-logo">
-          <img src="LogoSquare.png" alt="Shipping Experts Logo">
-        </div>
-      </div>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <!-- Row 1: Logo -->
+    <img src="Logo.png" alt="Shipping Experts Logo">
 
-      <div class="footer-links">
-        <a href="#home">Home</a> |
-        <a href="#about">About</a> |
-        <a href="#services">Services</a> |
-        <a href="#contact">Contact</a>
-      </div>
-
+    <!-- Row 2: Page Links -->
+    <div class="footer-links">
+      <a href="#">Home</a> |
+      <a href="#about">About</a> |
+      <a href="#services">Services</a> |
+      <a href="#contact">Contact</a>
     </div>
 
-    <div class="footer-center">
-      <div style="font-weight:700;color:#fff">Shipping Experts INC.</div>
-      <div>7551 14th Ave Suite A</div>
-      <div>Sacramento, USA 95820</div>
-      <div>Phone: <a href="tel:+19167607202" style="color:#fff;text-decoration:underline">(916) 760-7202</a></div>
-      <div>Email: <a href="mailto:dispatch@autoshippingexperts.com?subject=Request%20for%20a%20Quote" style="color:#fff;text-decoration:underline">dispatch@autoshippingexperts.com</a></div>
+    <!-- Row 3+: Company Info -->
+    <div class="footer-row">Shipping Experts INC.</div>
+    <div class="footer-row">7551 14th Ave Suite A</div>
+    <div class="footer-row">Sacramento, USA 95820</div>
+    <div class="footer-row">Phone: (916) 760-7202</div>
+    <div class="footer-row">Email: dispatch@autoshippingexperts.com</div>
 
-      <div class="spacer" aria-hidden="true"></div>
+    <!-- Spacer row -->
+    <div class="footer-row" style="margin:18px 0;"></div>
 
-      <div>© 2025 Shipping Experts INC. | All Rights Reserved</div>
-    </div>
+    <!-- Row: Copyright -->
+    <div class="footer-row">© 2025 Shipping Experts INC. | All Rights Reserved</div>
 
-    <div class="footer-legal">
-      <div>
-        <a href="#" style="color:#cfcfcf;margin-right:12px">Privacy Policy</a>
-        <span style="color:#666">|</span>
-        <a href="#" style="color:#cfcfcf;margin-left:12px;margin-right:12px">Copyright & Trademark</a>
-        <span style="color:#666">|</span>
-        <a href="#" style="color:#cfcfcf;margin-left:12px">Terms & Conditions</a>
-      </div>
+    <!-- Row: Legal Links -->
+    <div class="legal-links">
+      <a href="#">Privacy Policy</a> |
+      <a href="#">Copyright & Trademark</a> |
+      <a href="#">Terms & Conditions</a>
     </div>
   </footer>
 
