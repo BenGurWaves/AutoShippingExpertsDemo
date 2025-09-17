@@ -15,8 +15,6 @@
       --card:#ffffff;
       --maxw:1200px;
       --radius:12px;
-      --glass: rgba(255,255,255,0.5);
-      --accent-grad: linear-gradient(90deg,var(--orange) 0%, #ffffff 60%);
       --btn-ease: cubic-bezier(.2,.9,.3,1);
     }
 
@@ -31,7 +29,6 @@
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       line-height:1.45;
-      -webkit-font-feature-settings: "liga" 1;
     }
     a{color:inherit;text-decoration:none}
 
@@ -75,7 +72,7 @@
     }
     .header-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:18px;padding:12px 20px}
     .brand{display:flex;align-items:center;gap:12px}
-    .brand img{height:52px;width:auto;display:block}
+    .brand img{height:52px;width:auto;display:block;object-fit:contain}
     .brand h1{font-size:18px;margin:0;font-weight:800;color:#081126;letter-spacing:0.3px}
     .subdomain{font-size:12px;color:rgba(8,17,38,0.6)}
 
@@ -169,7 +166,7 @@
     .trust .cta-title{font-weight:700;margin-bottom:8px;font-size:16px}
     .trust .cta-row{margin-top:12px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-    /* Steps (How it works) - changed to card grid similar to About */
+    /* Steps (How it works) - card grid similar to About */
     .how{margin-top:26px;padding:22px;border-radius:12px}
     .how h2{font-size:20px;text-align:center;margin-bottom:12px}
     .how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:1000px;margin:0 auto}
@@ -189,20 +186,21 @@
 
     /* About / Contact / FAQ / Footer */
     .about, .contact, .faq{margin-top:26px;padding:22px;background:linear-gradient(180deg,#fff,#fcfcfc);border-radius:12px}
-    .about h2,.contact h2,.faq h2{margin-top:0}
+    .about h2,.contact h2,.faq h2{margin-top:0;text-align:center}
     .about p, .contact p{margin:0 auto;max-width:900px;text-align:center;color:#222}
     .contact .contact-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;justify-content:center}
     .faq .q{padding:12px;border-radius:8px;background:#fff;margin-bottom:8px}
 
+    /* Footer layout per your spec */
     footer.site-footer{margin-top:28px;background:#070707;color:#efefef;padding:36px 20px;border-radius:10px}
-    .footer-inner{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
-    @media (max-width:800px){ .footer-inner{grid-template-columns:1fr; text-align:center} }
-    .footer-logo{display:flex;flex-direction:column;gap:12px}
-    .footer-nav{display:flex;gap:12px;flex-direction:column}
-    .footer-legal{color:#bfbfbf;font-size:14px;display:flex;flex-direction:column;align-items:flex-end}
-    @media (max-width:800px){ .footer-legal{align-items:center} }
+    .footer-top{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.04)}
+    .footer-top .links{display:flex;gap:14px;align-items:center}
+    .footer-top .links a{color:#fff;font-weight:600}
+    .footer-center{max-width:var(--maxw);margin:18px auto 0;text-align:center;line-height:1.6}
+    .footer-center .spacer{height:12px}
+    .footer-legal{max-width:var(--maxw);margin:18px auto 0;text-align:center;color:#bfbfbf;font-size:14px}
 
-    .address{max-width:360px;font-size:14px;color:#d6d6d6}
+    .footer-logo img{height:56px;width:auto;object-fit:contain}
 
     /* Lightbox */
     .lightbox{position:fixed;inset:0;background:rgba(3,6,11,0.88);display:none;align-items:center;justify-content:center;padding:20px;z-index:99998}
@@ -225,11 +223,11 @@
       .service-row{grid-template-columns:1fr}
       .brand h1{font-size:16px}
       .brand img{height:44px}
+      .footer-top{flex-direction:column;align-items:center;gap:12px}
     }
 
     /* focus styles for accessibility */
     button:focus, a:focus{outline:3px solid rgba(255,103,0,0.14);outline-offset:3px}
-
   </style>
 
   <!-- JSON-LD LocalBusiness (structured data) -->
@@ -261,7 +259,7 @@
 
   <!-- Loader (centered video on white background) -->
   <div id="loader" role="dialog" aria-label="Loading animation - Shipping Experts">
-    <video id="introVideo" src="AutoShippingExpertsLoad.mp4" autoplay muted playsinline preload="auto"></video>
+    <video id="introVideo" src="ShippingExpertsLoad.mp4" autoplay muted playsinline preload="auto"></video>
     <button class="skip" aria-label="Skip intro (show site now)" id="skipIntro">Skip Intro</button>
   </div>
 
@@ -564,34 +562,45 @@
 
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="footer-inner">
-      <div class="footer-logo">
-        <img src="Logo.png" alt="Shipping Experts logo" style="height:56px;">
-        <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="#home" style="display:inline-block;margin-right:12px;color:#fff">Home</a>
-          <a href="#about" style="display:inline-block;margin-right:12px;color:#fff">About</a>
-          <a href="#services" style="display:inline-block;margin-right:12px;color:#fff">Services</a>
-          <a href="#contact" style="display:inline-block;color:#fff">Contact</a>
-        </nav>
-      </div>
-
-      <div class="address" aria-label="Company address">
-        <strong style="color:#fff">Shipping Experts INC.</strong><br>
-        7551 14th Ave Suite A<br>
-        Sacramento, USA 95820<br>
-        Phone: <a href="tel:+19167607202" style="color:#fff;text-decoration:underline">(916) 760-7202</a><br>
-        Email: <a href="mailto:dispatch@autoshippingexperts.com?subject=Request%20for%20a%20Quote" style="color:#fff;text-decoration:underline">dispatch@autoshippingexperts.com</a>
-      </div>
-
-      <div class="footer-legal">
-        <div style="color:#cfcfcf">© 2025 Shipping Experts INC. | All Rights Reserved</div>
-        <div style="margin-top:8px">
-          <a href="#" style="color:#cfcfcf;margin-right:12px">Privacy Policy</a>
-          <a href="#" style="color:#cfcfcf;margin-right:12px">Copyright & Trademark</a>
-          <a href="#" style="color:#cfcfcf">Terms & Conditions</a>
+  <!-- Footer (reworked per your rows) -->
+  <footer class="site-footer" role="contentinfo" aria-label="Footer">
+    <div class="footer-top">
+      <div class="footer-left" style="display:flex;align-items:center;gap:18px">
+        <div class="footer-logo">
+          <img src="Logo.png" alt="Shipping Experts logo">
         </div>
+      </div>
+
+      <div class="links" aria-label="Footer links">
+        <a href="#home">Home</a>
+        <span style="color:#666">|</span>
+        <a href="#about">About</a>
+        <span style="color:#666">|</span>
+        <a href="#services">Services</a>
+        <span style="color:#666">|</span>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+
+    <div class="footer-center">
+      <div style="font-weight:700;color:#fff">Shipping Experts INC.</div>
+      <div>7551 14th Ave Suite A</div>
+      <div>Sacramento, USA 95820</div>
+      <div>Phone: <a href="tel:+19167607202" style="color:#fff;text-decoration:underline">(916) 760-7202</a></div>
+      <div>Email: <a href="mailto:dispatch@autoshippingexperts.com?subject=Request%20for%20a%20Quote" style="color:#fff;text-decoration:underline">dispatch@autoshippingexperts.com</a></div>
+
+      <div class="spacer" aria-hidden="true"></div>
+
+      <div>© 2025 Shipping Experts INC. | All Rights Reserved</div>
+    </div>
+
+    <div class="footer-legal">
+      <div>
+        <a href="#" style="color:#cfcfcf;margin-right:12px">Privacy Policy</a>
+        <span style="color:#666">|</span>
+        <a href="#" style="color:#cfcfcf;margin-left:12px;margin-right:12px">Copyright & Trademark</a>
+        <span style="color:#666">|</span>
+        <a href="#" style="color:#cfcfcf;margin-left:12px">Terms & Conditions</a>
       </div>
     </div>
   </footer>
@@ -599,81 +608,108 @@
   <!-- Inline JavaScript -->
   <script>
   (function(){
-    // --- Utilities ---
+    // --- Helpers ---
     const $ = s => document.querySelector(s);
     const $$ = s => Array.from(document.querySelectorAll(s));
-    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-    // --- Intro loader logic ---
+    // --- Elements ---
     const loader = $('#loader');
     const intro = $('#introVideo');
     const skipBtn = $('#skipIntro');
-    let loaderHidden = false;
+    const slides = $$('.slide');
+    const counters = $$('.stat .num');
+    const revealEls = $$('.reveal');
 
-    function hideLoader() {
-      if(loaderHidden) return;
-      loaderHidden = true;
+    // --- Loader / intro video timing fix ---
+    let introStarted = false;
+    let introTimeout = null;
+    let globalFallbackTimeout = null;
+
+    function hideLoader(){
+      if(!loader) return;
       loader.classList.add('hidden');
       document.documentElement.style.overflow = '';
-      // start slideshow autoplay after reveal
       startSlideshow();
-      // start observing reveals and counters
+      // reveal content and animate counters that are visible now
       observeReveals();
-      observeCounters();
+      animateVisibleCounters();
+      observeCounters(); // observe remaining counters
     }
 
-    // Prevent scrolling during intro
+    // prevent scrolling during intro
     document.documentElement.style.overflow = 'hidden';
 
-    // When video ends or 5s timeout -> hide loader
-    let introTimeout = setTimeout(()=>{ try{ intro.pause(); }catch(e){} hideLoader(); }, 5000);
-    intro.addEventListener('ended', ()=>{ clearTimeout(introTimeout); hideLoader(); });
-    skipBtn.addEventListener('click', ()=>{ clearTimeout(introTimeout); hideLoader(); });
+    // Start a global fallback to avoid indefinite loader if video never loads
+    globalFallbackTimeout = setTimeout(()=>{
+      if(!introStarted){
+        // give up waiting for intro to start, reveal page
+        hideLoader();
+      }
+    }, 12000); // 12s safety
 
-    // Try to play if autoplay blocked
-    setTimeout(()=>{ if(intro.paused) { intro.play().catch(()=>{}); } }, 700);
+    // When video actually begins playing, start the 5s visible timer
+    function onIntroPlaying(){
+      if(introStarted) return;
+      introStarted = true;
+      if(globalFallbackTimeout){ clearTimeout(globalFallbackTimeout); globalFallbackTimeout = null; }
+      introTimeout = setTimeout(()=>{
+        try{ intro.pause(); } catch(e){}
+        hideLoader();
+      }, 5000); // allow full 5s once playing begins
+    }
 
-    // Allow clicking loader background to skip
-    loader.addEventListener('click', (e)=>{
-      if(e.target === loader || e.target === skipBtn){ clearTimeout(introTimeout); hideLoader(); }
+    // try to autoplay / ensure playback starts when possible
+    if(intro){
+      intro.addEventListener('playing', onIntroPlaying);
+      intro.addEventListener('canplaythrough', ()=> {
+        // if video buffered enough, try to play
+        if(!introStarted){
+          intro.play().catch(()=>{ /* autoplay blocked; user may hit skip */ });
+        }
+      });
+    }
+
+    // skip shortcuts
+    skipBtn.addEventListener('click', ()=> {
+      if(introTimeout) clearTimeout(introTimeout);
+      if(globalFallbackTimeout) clearTimeout(globalFallbackTimeout);
+      hideLoader();
     });
 
-    // --- Hero headline variant via querystring (AB test hook) ---
-    (function(){
-      const params = new URLSearchParams(location.search);
-      const v = params.get('variant');
-      const hero = $('#heroHeadline');
-      if(!hero) return;
-      if(v === '2'){
-        hero.textContent = 'Luxury care for every vehicle — coast to coast.';
-      } else if(v === '3'){
-        hero.textContent = 'Safe. Insured. On time — that’s Shipping Experts.';
-      } // default stays
-    })();
+    // allow clicking backdrop to skip
+    loader.addEventListener('click', (e) => {
+      if(e.target === loader || e.target === skipBtn){
+        if(introTimeout) clearTimeout(introTimeout);
+        if(globalFallbackTimeout) clearTimeout(globalFallbackTimeout);
+        hideLoader();
+      }
+    });
+
+    // If video is paused on load (autoplay blocked), try to play after tiny delay
+    setTimeout(()=>{ if(intro && intro.paused){ intro.play().catch(()=>{}); } }, 600);
 
     // --- Slideshow (fade) ---
-    const slides = $$('.slide');
     let current = 0;
     let slideTimer = null;
     function showSlide(i){
       slides.forEach((s,idx)=> s.classList.toggle('active', idx===i));
       current = i;
     }
-    function nextSlide(){ showSlide((current+1)%slides.length) }
+    function nextSlide(){ showSlide((current+1)%slides.length); }
     function startSlideshow(){ if(slideTimer) return; slideTimer = setInterval(nextSlide, 4200); }
     function stopSlideshow(){ clearInterval(slideTimer); slideTimer = null; }
-    document.addEventListener('visibilitychange', ()=>{ if(document.hidden) stopSlideshow(); else startSlideshow(); });
+    document.addEventListener('visibilitychange', ()=> { if(document.hidden) stopSlideshow(); else startSlideshow(); });
 
     // --- Lightbox gallery (works for hero + services) ---
     const lightbox = $('#lightbox');
     const lbImage = $('#lbImage');
     const lbClose = $('#lbClose');
     const lbPrev = $('#lbPrev'); const lbNext = $('#lbNext');
-    // collect images to gallery
-    const galleryImgs = $$('img[alt*="Truck"], .service-image img');
+    const galleryImgs = $$('img[alt*="Truck"], .service-image img, img[alt="Truck 1"], img[alt="Truck 2"]');
     const gallerySrc = galleryImgs.map(i => i.getAttribute('src'));
     let lbIndex = 0;
     function openLightbox(idx){
+      if(!gallerySrc.length) return;
       lbIndex = ((idx%gallerySrc.length)+gallerySrc.length)%gallerySrc.length;
       lbImage.src = gallerySrc[lbIndex];
       lightbox.classList.add('visible'); lightbox.setAttribute('aria-hidden','false');
@@ -686,15 +722,15 @@
       img.style.cursor = 'zoom-in';
       img.addEventListener('click', (e)=>{ e.stopPropagation(); openLightbox(idx); });
     });
-    lbClose.addEventListener('click', closeLightbox);
-    lbPrev.addEventListener('click', lbPrevFn);
-    lbNext.addEventListener('click', lbNextFn);
-    lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
-    window.addEventListener('keydown', (e)=>{ if(lightbox.classList.contains('visible')){ if(e.key==='Escape') closeLightbox(); if(e.key==='ArrowLeft') lbPrevFn(); if(e.key==='ArrowRight') lbNextFn(); } });
+    if(lbClose){ lbClose.addEventListener('click', closeLightbox); }
+    if(lbPrev) lbPrev.addEventListener('click', lbPrevFn);
+    if(lbNext) lbNext.addEventListener('click', lbNextFn);
+    if(lightbox) lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+    window.addEventListener('keydown', (e)=>{ if(lightbox && lightbox.classList.contains('visible')){ if(e.key==='Escape') closeLightbox(); if(e.key==='ArrowLeft') lbPrevFn(); if(e.key==='ArrowRight') lbNextFn(); } });
 
-    // --- Animated stat counters when in view ---
-    const counters = $$('.stat .num');
+    // --- Counters: animate when in view OR when loader hides if they're visible ---
     function animateCount(el){
+      if(!el || el.dataset.animated) return;
       const targetAttr = el.dataset.count;
       if(!targetAttr) return;
       const target = parseFloat(targetAttr) || 0;
@@ -702,6 +738,7 @@
       const suffix = el.dataset.suffix || '';
       const duration = 1400;
       const start = performance.now();
+      el.dataset.animated = '1'; // mark as animated
       function step(now){
         const t = Math.min(1,(now-start)/duration);
         const eased = t*(2-t); // easeOutQuad
@@ -728,11 +765,23 @@
           }
         });
       }, {root:null, threshold:0.2});
-      counters.forEach(c => observer.observe(c));
+      counters.forEach(c => {
+        if(!c.dataset.animated) observer.observe(c);
+      });
+    }
+
+    function animateVisibleCounters(){
+      counters.forEach(c => {
+        if(c.dataset.animated) return;
+        const rect = c.getBoundingClientRect();
+        // If within viewport (mostly)
+        if(rect.top < window.innerHeight * 0.95){
+          animateCount(c);
+        }
+      });
     }
 
     // --- Reveal on scroll for sections (staggered) ---
-    const revealEls = $$('.reveal');
     let revealObserved = false;
     function observeReveals(){
       if(revealObserved) return;
@@ -786,9 +835,30 @@
       });
     });
 
-    // --- Start slide show & reveal once loader hidden or if loader not used ---
-    if(loaderHidden){ startSlideshow(); observeReveals(); observeCounters(); }
-    window.addEventListener('load', ()=> { setTimeout(()=> { if(!loaderHidden){ /* loader will hide itself */ } observeReveals(); observeCounters(); startSlideshow(); }, 80); });
+    // --- Start slideshow & observers after loader hidden or when load completes ---
+    function initAfterLoad(){
+      // If loader has been hidden already, ensure slideshow & reveals & counters running
+      startSlideshow();
+      observeReveals();
+      animateVisibleCounters();
+      observeCounters();
+    }
+
+    // if loader already hidden (edge), initialize
+    if(loader && loader.classList.contains('hidden')){
+      initAfterLoad();
+    }
+
+    // When page load completes, ensure we set reveals (in case loader didn't hide)
+    window.addEventListener('load', ()=> {
+      // nothing aggressive: loader logic will handle reveal when it hides;
+      // but if loader is not present or already hidden, start things:
+      setTimeout(()=> {
+        if(!loader || loader.classList.contains('hidden')){
+          initAfterLoad();
+        }
+      }, 80);
+    });
 
   })();
   </script>
