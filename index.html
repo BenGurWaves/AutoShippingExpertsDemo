@@ -260,6 +260,116 @@
       color: #fff;
     }
 
+    /* ---------------- MOBILE FIXES ---------------- */
+@media (max-width: 767px) {
+
+  /* Loader: center video, white background */
+  #loader {
+    background:#fff !important;
+    justify-content:center;
+    align-items:center;
+  }
+  #loader video {
+    width:95vw;
+    height:auto;
+    max-height:80vh;
+    border-radius:8px;
+  }
+
+  /* Force white mode no matter device dark mode */
+  body {
+    background:#fff !important;
+    color:#081126 !important;
+  }
+
+  /* Header: stack logo + brand + buttons */
+  header.site-header {
+    border-radius:0;
+  }
+  .header-inner {
+    flex-wrap:wrap;
+    justify-content:center;
+    text-align:center;
+  }
+  nav.main-nav {
+    display:none; /* hide nav links on small phones */
+  }
+  .cta {
+    flex:1 1 100%;
+    justify-content:center;
+    margin-top:8px;
+    flex-wrap:wrap;
+  }
+  .cta .btn {
+    flex:1 1 auto;
+    min-width:140px;
+    justify-content:center;
+  }
+
+  /* Slideshow: full width, remove overlay text on mobile */
+  .slideshow {
+    width:100%;
+    height:280px;
+    border-radius:0;
+  }
+  .hero-copy {
+    display:none !important;
+  }
+
+  /* Thin CTA simplified: stacked text/buttons */
+  .thin-cta {
+    flex-direction:column;
+    gap:8px;
+    text-align:center;
+  }
+  .thin-cta .btn-quote {
+    width:100%;
+  }
+
+  /* Trust/Ready to ship section */
+  .trust h2 {
+    font-size:20px;
+  }
+  .trust .cta-title {
+    display:block;
+    font-size:18px;
+    margin-bottom:6px;
+  }
+  .trust .cta-row {
+    flex-direction:column;
+    gap:8px;
+  }
+
+  /* Services: picture then text stacked */
+  .service-row {
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .service-row.reverse {
+    direction:ltr;
+  }
+  .service-image {
+    order:1;
+  }
+  .service-content {
+    order:2;
+    margin-top:10px;
+  }
+
+  /* About: break paragraph into more readable blocks */
+  .about p {
+    text-align:left;
+    line-height:1.6;
+    font-size:15px;
+  }
+  .about p::after {
+    content:"";
+    display:block;
+    margin:12px 0;
+    border-bottom:1px solid rgba(0,0,0,0.08);
+  }
+}
+
   </style>
 
   <!-- JSON-LD LocalBusiness (structured data) -->
