@@ -230,6 +230,33 @@
 
     /* focus styles for accessibility */
     button:focus, a:focus{outline:3px solid rgba(255,103,0,0.14);outline-offset:3px}
+
+    .footer-logo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.footer-logo img {
+  height: 60px; /* adjust size as needed */
+  width: auto;  /* keeps it from stretching */
+}
+
+.footer-links {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.footer-links a {
+  color: #fff; /* or whatever your footer text color is */
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: 500;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
   </style>
 
   <!-- JSON-LD LocalBusiness (structured data) -->
@@ -569,19 +596,17 @@
     <div class="footer-top">
       <div class="footer-left" style="display:flex;align-items:center;gap:18px">
         <div class="footer-logo">
-          <img src="Logo.png" alt="Shipping Experts logo">
+          <img src="LogoSquare.png" alt="Shipping Experts Logo">
         </div>
       </div>
 
-      <div class="links" aria-label="Footer links">
-        <a href="#home">Home</a>
-        <span style="color:#666">|</span>
-        <a href="#about">About</a>
-        <span style="color:#666">|</span>
-        <a href="#services">Services</a>
-        <span style="color:#666">|</span>
+      <div class="footer-links">
+        <a href="#home">Home</a> |
+        <a href="#about">About</a> |
+        <a href="#services">Services</a> |
         <a href="#contact">Contact</a>
       </div>
+
     </div>
 
     <div class="footer-center">
