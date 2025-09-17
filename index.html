@@ -275,6 +275,10 @@
     max-height:80vh;
     border-radius:8px;
   }
+  :root {
+  color-scheme: light;
+}
+
 
   /* Force white mode no matter device dark mode */
   body {
@@ -369,6 +373,26 @@
     border-bottom:1px solid rgba(0,0,0,0.08);
   }
 }
+    /* Mobile default (applies to all unless changed later) */
+header {
+  background-color: orange;
+  color: black;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  header {
+    background-color: blue;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  header {
+    background-color: green;
+  }
+}
+
 
   </style>
 
