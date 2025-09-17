@@ -393,67 +393,6 @@ header {
   }
 }
 
-    /* ---------- MOBILE SLIDESHOW STABILITY (only <= 767px) ---------- */
-@media (max-width: 767px) {
-
-  /* force light mode only on phones */
-  html, body {
-    background: #ffffff !important;
-    color-scheme: light;
-    color: #081126 !important;
-  }
-
-  /* make slideshow a stable 16:9 rectangle and white bg (no black half) */
-  .slideshow {
-    background: #ffffff !important;
-    width: 100% !important;
-    aspect-ratio: 16 / 9;
-    max-height: 55vh;
-    height: auto !important;
-    border-radius: 8px !important;
-    overflow: hidden !important;
-    display: block !important;
-  }
-
-  /* ensure slides fill the slideshow at all times */
-  .slides,
-  .slide {
-    height: 100% !important;
-    width: 100% !important;
-  }
-
-  /* CRITICAL: keep slides absolutely positioned always so toggling .active doesn't reflow layout */
-  .slide {
-    position: absolute !important;
-    inset: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: #fff !important; /* prevents dark strip while image loads */
-  }
-  .slide.active {
-    position: absolute !important; /* override any desktop rule that sets relative */
-    opacity: 1 !important;
-  }
-
-  /* make images cover the container and avoid reflow/flicker */
-  .slide img {
-    width: 100% !important;
-    height: 100% !important;
-    min-width: 100% !important;
-    min-height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-    transform: translateZ(0) !important; /* promote to GPU layer to reduce flicker */
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
-  }
-
-  /* hide hero copy on mobile (per earlier request) */
-  .hero-copy { display: none !important; }
-}
-
-
   </style>
 </head>
 <body>
