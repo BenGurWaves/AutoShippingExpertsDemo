@@ -393,31 +393,68 @@ header {
   }
 }
 
+    /* ---------- MOBILE SLIDESHOW STABILITY (only <= 767px) ---------- */
+@media (max-width: 767px) {
+
+  /* force light mode only on phones */
+  html, body {
+    background: #ffffff !important;
+    color-scheme: light;
+    color: #081126 !important;
+  }
+
+  /* make slideshow a stable 16:9 rectangle and white bg (no black half) */
+  .slideshow {
+    background: #ffffff !important;
+    width: 100% !important;
+    aspect-ratio: 16 / 9;
+    max-height: 55vh;
+    height: auto !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    display: block !important;
+  }
+
+  /* ensure slides fill the slideshow at all times */
+  .slides,
+  .slide {
+    height: 100% !important;
+    width: 100% !important;
+  }
+
+  /* CRITICAL: keep slides absolutely positioned always so toggling .active doesn't reflow layout */
+  .slide {
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #fff !important; /* prevents dark strip while image loads */
+  }
+  .slide.active {
+    position: absolute !important; /* override any desktop rule that sets relative */
+    opacity: 1 !important;
+  }
+
+  /* make images cover the container and avoid reflow/flicker */
+  .slide img {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    transform: translateZ(0) !important; /* promote to GPU layer to reduce flicker */
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+
+  /* hide hero copy on mobile (per earlier request) */
+  .hero-copy { display: none !important; }
+}
+
 
   </style>
-
-  <!-- JSON-LD LocalBusiness (structured data) -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"LocalBusiness",
-    "name":"Shipping Experts INC.",
-    "url":"https://autoshippingexperts.com",
-    "logo":"https://autoshippingexperts.com/Logo.png",
-    "telephone":"+1-916-760-7202",
-    "email":"dispatch@autoshippingexperts.com",
-    "address":{
-      "@type":"PostalAddress",
-      "streetAddress":"7551 14th Ave Suite A",
-      "addressLocality":"Sacramento",
-      "addressRegion":"CA",
-      "postalCode":"95820",
-      "addressCountry":"US"
-    },
-    "description":"Shipping Experts — Nationwide auto transport. Open & enclosed carriers, exotic shipping, dealers, motorcycles, boats and inoperable vehicles."
-  }
-  </script>
-
 </head>
 <body>
 
@@ -1018,7 +1055,82 @@ header {
     });
 
   })();
+
+    <!-- JSON-LD LocalBusiness (structured data) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"Shipping Experts INC.",
+    "url":"https://autoshippingexperts.com",
+    "logo":"https://autoshippingexperts.com/Logo.png",
+    "telephone":"+1-916-760-7202",
+    "email":"dispatch@autoshippingexperts.com",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"7551 14th Ave Suite A",
+      "addressLocality":"Sacramento",
+      "addressRegion":"CA",
+      "postalCode":"95820",
+      "addressCountry":"US"
+    },
+    "description":"Shipping Experts — Nationwide auto transport. Open & enclosed carriers, exotic shipping, dealers, motorcycles, boats and inoperable vehicles."
+  }
   </script>
+
+  </script>
+
+  <script>
+(function(){
+  if (typeof window === 'undefined') return;
+  if (window.innerWidth > 767) return; // mobile-only
+
+  // Preload all slideshow images to minimize loading jitter
+  try {
+    document.querySelectorAll('.slides img').forEach(img => {
+      const src = img.getAttribute('src');
+      if (src) {
+        const p = new Image();
+        p.src = src;
+      }
+    });
+  } catch(e){ /* silent */ }
+
+  // Fallback for browsers that don't support aspect-ratio
+  try {
+    var supportsAspect = window.CSS && CSS.supports && CSS.supports('aspect-ratio', '16/9');
+    if (!supportsAspect) {
+      const ss = document.getElementById('slideshow');
+      if (ss && !ss.querySelector('.ar-fallback')) {
+        ss.style.position = 'relative';
+        const slides = ss.querySelector('.slides');
+        if (slides) {
+          // create wrapper using padding-top trick
+          const wrapper = document.createElement('div');
+          wrapper.className = 'ar-fallback';
+          wrapper.style.width = '100%';
+          wrapper.style.paddingTop = (9/16*100) + '%';
+          wrapper.style.position = 'relative';
+          // move slides into wrapper
+          slides.parentNode.insertBefore(wrapper, slides);
+          wrapper.appendChild(slides);
+          // make slides fill the wrapper absolutely
+          slides.style.position = 'absolute';
+          slides.style.top = '0';
+          slides.style.left = '0';
+          slides.style.right = '0';
+          slides.style.bottom = '0';
+        }
+      }
+    }
+  } catch(e){ /* silent */ }
+
+  // Defensive: ensure any already-active slide is absolute (in case desktop CSS leaked)
+  try {
+    document.querySelectorAll('.slide.active').forEach(s => s.style.position = 'absolute');
+  } catch(e){/* silent */}
+})();
+</script>
 
 </body>
 </html>
